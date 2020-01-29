@@ -51,10 +51,10 @@ namespace FinalCapstone
             }
 
             // creating Creating Manager role   
-            if (!roleManager.RoleExists("Teammember"))
+            if (!roleManager.RoleExists("TeamMember"))
             {
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Teammember";
+                var role = new IdentityRole();
+                role.Name = "TeamMember";
                 roleManager.Create(role);
 
             }

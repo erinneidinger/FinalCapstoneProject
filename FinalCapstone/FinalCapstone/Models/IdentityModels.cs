@@ -20,6 +20,12 @@ namespace FinalCapstone.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Organization> Organizations { get; set; }
+
+        public DbSet<Team> Teams { get; set; }
+
+        public DbSet<TeamMember> TeamMembers { get; set; }
+        
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
