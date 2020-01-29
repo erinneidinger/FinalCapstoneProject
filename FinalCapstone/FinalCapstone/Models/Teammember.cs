@@ -10,7 +10,7 @@ namespace FinalCapstone.Models
     public class TeamMember
     {
         [Key]
-        public int Id { get; set; }
+        public int MemberId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StreetAddress { get; set; }
@@ -19,9 +19,6 @@ namespace FinalCapstone.Models
         public string Email { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
-        public List<Organization>organizations { get; set; }
-        public List<Team> teams { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }

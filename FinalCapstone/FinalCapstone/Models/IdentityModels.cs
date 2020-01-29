@@ -26,6 +26,7 @@ namespace FinalCapstone.Models
 
         public DbSet<TeamMember> TeamMembers { get; set; }
         
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

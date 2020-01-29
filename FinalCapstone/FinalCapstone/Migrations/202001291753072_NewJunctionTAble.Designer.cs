@@ -7,13 +7,13 @@ namespace FinalCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class NEWMigration : IMigrationMetadata
+    public sealed partial class NewJunctionTAble : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NEWMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NewJunctionTAble));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001291357557_NEWMigration"; }
+            get { return "202001291753072_NewJunctionTAble"; }
         }
         
         string IMigrationMetadata.Source
