@@ -5,11 +5,77 @@
 }
 
 <h2>Details</h2>
+@*<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Find my Team:</h2>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            var venLocation = { lat: @Model.Lat, lng: @Model.Lng };
+
+            var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: venLocation });
+
+            var marker = new google.maps.Marker({ position: venLocation, map: map, animation: google.maps.Animation.BOUNCE });
+
+    //var infoWindow = new google.maps.InforWindow({
+    //    content: (".details")
+    //});
+
+    //marker.addListener('click', function () {
+    //    infoWindow.open(map, marker);
+    //    });
+    }
+
+    </script>
+    <script src="@Model.apiMapCall" async defer></script>
+</body>
+</html>*@
+
 
 <div>
     <h4>Team</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationId)
+        </dd>
+
     </dl>
 </div>
 <p>

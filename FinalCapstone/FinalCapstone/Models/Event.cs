@@ -7,18 +7,14 @@ using System.Web;
 
 namespace FinalCapstone.Models
 {
-    public class TeamMember
+    public class Event
     {
         [Key]
-        public int TeammemberId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int EventId { get; set; }
+        public DateTime Time { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
-        public string Email { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
