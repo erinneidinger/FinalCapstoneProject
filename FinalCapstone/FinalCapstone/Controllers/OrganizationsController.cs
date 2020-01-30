@@ -46,7 +46,7 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrganizationId")] Organization organization)
+        public ActionResult Create([Bind(Include = "OrganizationId,Name,City,State,Bio,ApplicationId")] Organization organization)
         {
             if (ModelState.IsValid)
             {
