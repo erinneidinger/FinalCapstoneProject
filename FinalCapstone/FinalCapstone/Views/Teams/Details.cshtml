@@ -5,7 +5,7 @@
 }
 
 <h2>Details</h2>
-@*<html>
+<html>
 <head>
     <style>
         #map {
@@ -19,7 +19,7 @@
     <div id="map"></div>
     <script>
         function initMap() {
-            var venLocation = { lat: @Model.Lat, lng: @Model.Lng };
+            var venLocation = { lat: @Model.Latitude, lng: @Model.Longitude };
 
             var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: venLocation });
 
@@ -35,10 +35,9 @@
     }
 
     </script>
-    <script src="@Model.apiMapCall" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=" + PrivateKey. async defer></script>
 </body>
-</html>*@
-
+</html>
 
 <div>
     <h4>Team</h4>
@@ -66,14 +65,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Longitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationId)
         </dd>
 
     </dl>

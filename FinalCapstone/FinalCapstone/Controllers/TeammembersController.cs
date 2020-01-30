@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
+using Newtonsoft.Json;
 
 namespace FinalCapstone.Controllers
 {
@@ -17,7 +19,7 @@ namespace FinalCapstone.Controllers
         // GET: TeamMembers
         public ActionResult Index()
         {
-            var TeamMembers = db.TeamMembers.Include(t => t.ApplicationUser);
+            var TeamMembers = db.Teammembers.Include(t => t.ApplicationUser);
             return View(TeamMembers.ToList());
         }
 
@@ -28,7 +30,7 @@ namespace FinalCapstone.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember TeamMember = db.TeamMembers.Find(id);
+            TeamMember TeamMember = db.Teammembers.Find(id);
             if (TeamMember == null)
             {
                 return HttpNotFound();
@@ -36,27 +38,10 @@ namespace FinalCapstone.Controllers
             return View(TeamMember);
         }
 
-        //GeoCode GET
-        //public async System.Threading.Tasks.Task<Concert> GetLatNLngAsync()
-        //{
-        //    using (HttpClient client = new HttpClient());
-        //    HttpResponseMessage response = await client.GetAsync(url);
-        //    string jsonResult = await response.Content.ReadAsStringAsync();
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        GeoCode location = JsonConvert.DeserializeObject<GeoCode>(jsonResult);
-        //        e.Lat = location.results[0].geometry.location.lat;
-        //        e.Lng = location.results[0].geometry.location.lng;
-        //        return;
-        //    }
-        //    db.SaveChanges();
-        //    return;
-        //}
-
         // GET: TeamMembers/Create
         public ActionResult Create()
         {
-            ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.ApplicationId = new SelectList(db.Users, "TeammemberId", "Email");
             return View();
         }
 
@@ -65,16 +50,16 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MemberId,FirstName,LastNameStreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
+        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastNameStreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
         {
             if (ModelState.IsValid)
             {
-                db.TeamMembers.Add(TeamMember);
+                db.Teammembers.Add(TeamMember);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email", TeamMember.ApplicationId);
+            ViewBag.ApplicationId = new SelectList(db.Users, "TeammemberId", "Email", TeamMember.ApplicationId);
             return View(TeamMember);
         }
 
@@ -85,7 +70,7 @@ namespace FinalCapstone.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember TeamMember = db.TeamMembers.Find(id);
+            TeamMember TeamMember = db.Teammembers.Find(id);
             if (TeamMember == null)
             {
                 return HttpNotFound();
@@ -118,7 +103,7 @@ namespace FinalCapstone.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamMember TeamMember = db.TeamMembers.Find(id);
+            TeamMember TeamMember = db.Teammembers.Find(id);
             if (TeamMember == null)
             {
                 return HttpNotFound();
@@ -131,8 +116,8 @@ namespace FinalCapstone.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TeamMember TeamMember = db.TeamMembers.Find(id);
-            db.TeamMembers.Remove(TeamMember);
+            TeamMember TeamMember = db.Teammembers.Find(id);
+            db.Teammembers.Remove(TeamMember);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

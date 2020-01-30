@@ -192,22 +192,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001292152037_Messagemigrate.cs" />
-    <Compile Include="Migrations\202001292152037_Messagemigrate.Designer.cs">
-      <DependentUpon>202001292152037_Messagemigrate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001292219275_NewMigrationJunction.cs" />
-    <Compile Include="Migrations\202001292219275_NewMigrationJunction.designer.cs">
-      <DependentUpon>202001292219275_NewMigrationJunction.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001292241573_eventTableAdd.cs" />
-    <Compile Include="Migrations\202001292241573_eventTableAdd.designer.cs">
-      <DependentUpon>202001292241573_eventTableAdd.cs</DependentUpon>
+    <Compile Include="Migrations\202001301811034_newmigration.cs" />
+    <Compile Include="Migrations\202001301811034_newmigration.designer.cs">
+      <DependentUpon>202001301811034_newmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\EventTeamJunctionTable.cs" />
     <Compile Include="Models\GeoCode.cs" />
     <Compile Include="Models\GeoDirection.cs" />
     <Compile Include="Models\GeoLocation.cs" />
@@ -215,6 +206,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\PrivateKey.cs" />
     <Compile Include="Models\TripleJunctionTable.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
@@ -312,14 +304,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001292152037_Messagemigrate.resx">
-      <DependentUpon>202001292152037_Messagemigrate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001292219275_NewMigrationJunction.resx">
-      <DependentUpon>202001292219275_NewMigrationJunction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001292241573_eventTableAdd.resx">
-      <DependentUpon>202001292241573_eventTableAdd.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001301811034_newmigration.resx">
+      <DependentUpon>202001301811034_newmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

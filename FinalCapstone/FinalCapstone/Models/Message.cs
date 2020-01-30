@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,5 +17,11 @@ namespace FinalCapstone.Models
         public string MessageToPost { get; set; }
         public DateTime DatePosted { get; set; }
 
+       
+        
+        [ForeignKey ("teammember")]
+        public int TeammemberId { get; set; }
+        public TeamMember teammember { get; set; }
+       
     }
 }

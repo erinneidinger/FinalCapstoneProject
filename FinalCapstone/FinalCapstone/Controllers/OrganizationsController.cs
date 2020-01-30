@@ -21,7 +21,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Organizations/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -59,7 +59,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Organizations/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {

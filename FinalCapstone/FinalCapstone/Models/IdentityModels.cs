@@ -24,13 +24,12 @@ namespace FinalCapstone.Models
 
         public DbSet<Team> Teams { get; set; }
 
-        public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<TeamMember> Teammembers { get; set; }
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }
         
         public DbSet<TripleJunctionTable> TripleJunctionTables { get; set; } 
-        public DbSet<EventTeamJunctionTable> EventTeamJunctionTables { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
+using Newtonsoft.Json;
 
 namespace FinalCapstone.Controllers
 {
@@ -21,7 +23,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Teams/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -34,6 +36,24 @@ namespace FinalCapstone.Controllers
             }
             return View(team);
         }
+
+        //GeoCode GET
+        //public async System.Threading.Tasks.Task<Event>GeoCode()
+        //{
+
+        //    using (HttpClient client = new HttpClient());
+           // HttpResponseMessage response = await client.GetAsync(url);
+            //string jsonResult = await response.Content.ReadAsStringAsync();
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    GeoCode location = JsonConvert.DeserializeObject<GeoCode>(jsonResult);
+                //.Lat = location.results[0].geometry.location.lat;
+                //.Lng = location.results[0].geometry.location.lng;
+                //return;
+        //    }
+        //    db.SaveChanges();
+        //    return;
+        //}
 
         // GET: Teams/Create
         public ActionResult Create()
@@ -59,7 +79,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Teams/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {

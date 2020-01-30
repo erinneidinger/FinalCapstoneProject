@@ -20,7 +20,7 @@ namespace FinalCapstone.Models
         public int TeammemberId { get; set; }
         public TeamMember Teammember{ get; set; }
 
-        
+       
         [ForeignKey("Team")]
         public int? TeamId { get; set; }
         public Team Team { get; set; }

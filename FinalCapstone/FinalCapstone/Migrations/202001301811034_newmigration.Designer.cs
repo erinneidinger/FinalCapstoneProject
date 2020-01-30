@@ -7,13 +7,13 @@ namespace FinalCapstone.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class eventTableAdd : IMigrationMetadata
+    public sealed partial class newmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(eventTableAdd));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(newmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001292241573_eventTableAdd"; }
+            get { return "202001301811034_newmigration"; }
         }
         
         string IMigrationMetadata.Source
