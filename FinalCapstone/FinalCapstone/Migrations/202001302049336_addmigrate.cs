@@ -3,22 +3,24 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class newmigration : DbMigration
+    public partial class addmigrate : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Events",
+                "dbo.Meetings",
                 c => new
                     {
-                        EventId = c.Int(nullable: false, identity: true),
+                        MeetingId = c.Int(nullable: false, identity: true),
                         Time = c.DateTime(nullable: false),
                         StreetAddress = c.String(),
                         City = c.String(),
                         State = c.String(),
+                        Latitude = c.String(),
+                        Longitude = c.String(),
                         TeamId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.EventId)
+                .PrimaryKey(t => t.MeetingId)
                 .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
                 .Index(t => t.TeamId);
             
@@ -178,7 +180,7 @@
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Events", "TeamId", "dbo.Teams");
+            DropForeignKey("dbo.Meetings", "TeamId", "dbo.Teams");
             DropIndex("dbo.TripleJunctionTables", new[] { "TeamId" });
             DropIndex("dbo.TripleJunctionTables", new[] { "TeammemberId" });
             DropIndex("dbo.TripleJunctionTables", new[] { "OrganizationId" });
@@ -190,7 +192,7 @@
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.TeamMembers", new[] { "ApplicationId" });
             DropIndex("dbo.Messages", new[] { "TeammemberId" });
-            DropIndex("dbo.Events", new[] { "TeamId" });
+            DropIndex("dbo.Meetings", new[] { "TeamId" });
             DropTable("dbo.TripleJunctionTables");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Organizations");
@@ -201,7 +203,7 @@
             DropTable("dbo.TeamMembers");
             DropTable("dbo.Messages");
             DropTable("dbo.Teams");
-            DropTable("dbo.Events");
+            DropTable("dbo.Meetings");
         }
     }
 }

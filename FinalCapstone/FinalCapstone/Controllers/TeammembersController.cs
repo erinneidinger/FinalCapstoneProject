@@ -37,7 +37,23 @@ namespace FinalCapstone.Controllers
             }
             return View(TeamMember);
         }
+        //public async Task<Meeting> GetLatNLngAsync()
+        //{
+        //    string requestUri = PrivateKey.URLGeocode + StreetAddress + ",+" + City + "+" + State + PrivateKey.KeyKey + PrivateKey.GoogleAPIKey;
+        //    HttpClient client = new HttpClient();
+        //    HttpResponseMessage response = await client.GetAsync(requestUri);
+        //    string jsonResult = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        GeoCode location = JsonConvert.DeserializeObject<GeoCode>(jsonResult);
+        //        Latitude = location.results [0].geometry.location.lat;
+        //        Longitude = location.results [0].geometry.location.lng;
+        //        return ;
+        //    }
 
+        //    db.SaveChanges();
+        //    return ;
+        //}
         // GET: TeamMembers/Create
         public ActionResult Create()
         {
@@ -50,7 +66,7 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastNameStreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
+        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastName,StreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
         {
             if (ModelState.IsValid)
             {

@@ -7,9 +7,9 @@ namespace FinalCapstone.Models
 {
     public static class PrivateKey
     {
-        public static string GoogleAPIKey = "AIzaSyAVFdH0lLZBSWw7m4EXHysoboX9fOC7f6s";
+        public static string GoogleAPIKey = "AIzaSyBFPBImKyLqJvBLRI7NEEzTKTJF0nXsbZw";
 
-        public static string URLGeocode = "https://maps.googleapis.com/maps/api/geocode/json?";
+        public static string URLGeocode = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
         public static string GeoMapURL = "https://maps.googleapis.com/maps/api/js?";
 

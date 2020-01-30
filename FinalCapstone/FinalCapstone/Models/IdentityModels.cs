@@ -26,7 +26,7 @@ namespace FinalCapstone.Models
 
         public DbSet<TeamMember> Teammembers { get; set; }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Message> Messages { get; set; }
         
         public DbSet<TripleJunctionTable> TripleJunctionTables { get; set; } 

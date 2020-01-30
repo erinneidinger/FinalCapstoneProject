@@ -29,12 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -58,16 +53,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Latitude)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Longitude)
-        </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TeammemberId }) |
             @Html.ActionLink("Details", "Details", new { id=item.TeammemberId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TeammemberId })
+            @Html.ActionLink("Delete", "Delete", new { id=item.TeammemberId }) |
+            @Html.ActionLink("Create New Organization", "Create", "Organizations")
         </td>
     </tr>
 }

@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\TeammembersController.cs" />
@@ -192,13 +193,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001301811034_newmigration.cs" />
-    <Compile Include="Migrations\202001301811034_newmigration.designer.cs">
-      <DependentUpon>202001301811034_newmigration.cs</DependentUpon>
+    <Compile Include="Migrations\202001302049336_addmigrate.cs" />
+    <Compile Include="Migrations\202001302049336_addmigrate.designer.cs">
+      <DependentUpon>202001302049336_addmigrate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\GeoCode.cs" />
     <Compile Include="Models\GeoDirection.cs" />
     <Compile Include="Models\GeoLocation.cs" />
@@ -286,6 +287,16 @@
     <Content Include="Views\Teams\Create.cshtml" />
     <Content Include="Views\Teams\Edit.cshtml" />
     <Content Include="Views\Teams\Delete.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Meetings\Create.cshtml" />
+    <Content Include="Views\Meetings\Delete.cshtml" />
+    <Content Include="Views\Meetings\Details.cshtml" />
+    <Content Include="Views\Meetings\Edit.cshtml" />
+    <Content Include="Views\Meetings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -304,8 +315,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001301811034_newmigration.resx">
-      <DependentUpon>202001301811034_newmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001302049336_addmigrate.resx">
+      <DependentUpon>202001302049336_addmigrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

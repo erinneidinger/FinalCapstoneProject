@@ -37,24 +37,6 @@ namespace FinalCapstone.Controllers
             return View(team);
         }
 
-        //GeoCode GET
-        //public async System.Threading.Tasks.Task<Event>GeoCode()
-        //{
-
-        //    using (HttpClient client = new HttpClient());
-           // HttpResponseMessage response = await client.GetAsync(url);
-            //string jsonResult = await response.Content.ReadAsStringAsync();
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    GeoCode location = JsonConvert.DeserializeObject<GeoCode>(jsonResult);
-                //.Lat = location.results[0].geometry.location.lat;
-                //.Lng = location.results[0].geometry.location.lng;
-                //return;
-        //    }
-        //    db.SaveChanges();
-        //    return;
-        //}
-
         // GET: Teams/Create
         public ActionResult Create()
         {
