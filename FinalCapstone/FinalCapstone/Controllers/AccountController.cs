@@ -168,7 +168,7 @@ namespace FinalCapstone.Controllers
                     //Assign Role to user Here     
                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
                     //Ends Here   
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Create", "Teammembers");
                 }
                 ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
                                           .ToList(), "Name", "Name");

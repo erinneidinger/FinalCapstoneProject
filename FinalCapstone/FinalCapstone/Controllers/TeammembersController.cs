@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace FinalCapstone.Controllers
@@ -19,8 +20,9 @@ namespace FinalCapstone.Controllers
         // GET: TeamMembers
         public ActionResult Index()
         {
-            var TeamMembers = db.Teammembers.Include(t => t.ApplicationUser);
-            return View(TeamMembers.ToList());
+            var userId = User.Identity.GetUserId();
+            var teammember = db.Teammembers.Where(c => c.ApplicationId == userId).ToList();
+            return View(teammember);
         }
 
         // GET: TeamMembers/Details/5
@@ -57,8 +59,8 @@ namespace FinalCapstone.Controllers
         // GET: TeamMembers/Create
         public ActionResult Create()
         {
-            ViewBag.ApplicationId = new SelectList(db.Users, "TeammemberId", "Email");
-            return View();
+            TeamMember teammember = new TeamMember();
+            return View(teammember);
         }
 
         // POST: TeamMembers/Create
@@ -66,17 +68,30 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastName,StreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
+        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastName,StreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember teammember)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Teammembers.Add(TeamMember);
+                teammember.ApplicationId = User.Identity.GetUserId();
+                db.Teammembers.Add(teammember);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AddToJunction");
             }
+            catch
+            {
+                return View();
+            }
+           
+        }
 
-            ViewBag.ApplicationId = new SelectList(db.Users, "TeammemberId", "Email", TeamMember.ApplicationId);
-            return View(TeamMember);
+        public ActionResult AddToJunction(TeamMember teammember)
+        {
+            teammember.ApplicationId = User.Identity.GetUserId();
+            var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
+            var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
+            db.TeammemberTeam.Add(foundId);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: TeamMembers/Edit/5

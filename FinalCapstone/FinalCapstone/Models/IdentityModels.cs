@@ -29,7 +29,7 @@ namespace FinalCapstone.Models
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Message> Messages { get; set; }
         
-        public DbSet<TripleJunctionTable> TripleJunctionTables { get; set; } 
+        public DbSet<TeammemberTeam> TeammemberTeam { get; set; } 
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

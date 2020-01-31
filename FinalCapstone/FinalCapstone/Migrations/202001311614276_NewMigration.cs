@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addmigrate : DbMigration
+    public partial class NewMigration : DbMigration
     {
         public override void Up()
         {
@@ -30,10 +30,26 @@
                     {
                         TeamId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        Members = c.String(),
                         Latitude = c.Double(nullable: false),
                         Longitude = c.Double(nullable: false),
+                        OrganizationId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.TeamId);
+                .PrimaryKey(t => t.TeamId)
+                .ForeignKey("dbo.Organizations", t => t.OrganizationId, cascadeDelete: true)
+                .Index(t => t.OrganizationId);
+            
+            CreateTable(
+                "dbo.Organizations",
+                c => new
+                    {
+                        OrganizationId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        City = c.String(),
+                        State = c.String(),
+                        Bio = c.String(),
+                    })
+                .PrimaryKey(t => t.OrganizationId);
             
             CreateTable(
                 "dbo.Messages",
@@ -130,18 +146,6 @@
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.Organizations",
-                c => new
-                    {
-                        OrganizationId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        City = c.String(),
-                        State = c.String(),
-                        Bio = c.String(),
-                    })
-                .PrimaryKey(t => t.OrganizationId);
-            
-            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -152,28 +156,24 @@
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.TripleJunctionTables",
+                "dbo.TeammemberTeams",
                 c => new
                     {
-                        OrganizationId = c.Int(nullable: false),
+                        TeamId = c.Int(nullable: false),
                         TeammemberId = c.Int(nullable: false),
-                        TeamId = c.Int(),
                     })
-                .PrimaryKey(t => new { t.OrganizationId, t.TeammemberId })
-                .ForeignKey("dbo.Organizations", t => t.OrganizationId, cascadeDelete: true)
-                .ForeignKey("dbo.Teams", t => t.TeamId)
+                .PrimaryKey(t => new { t.TeamId, t.TeammemberId })
+                .ForeignKey("dbo.Teams", t => t.TeamId, cascadeDelete: true)
                 .ForeignKey("dbo.TeamMembers", t => t.TeammemberId, cascadeDelete: true)
-                .Index(t => t.OrganizationId)
-                .Index(t => t.TeammemberId)
-                .Index(t => t.TeamId);
+                .Index(t => t.TeamId)
+                .Index(t => t.TeammemberId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.TripleJunctionTables", "TeammemberId", "dbo.TeamMembers");
-            DropForeignKey("dbo.TripleJunctionTables", "TeamId", "dbo.Teams");
-            DropForeignKey("dbo.TripleJunctionTables", "OrganizationId", "dbo.Organizations");
+            DropForeignKey("dbo.TeammemberTeams", "TeammemberId", "dbo.TeamMembers");
+            DropForeignKey("dbo.TeammemberTeams", "TeamId", "dbo.Teams");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Messages", "TeammemberId", "dbo.TeamMembers");
             DropForeignKey("dbo.TeamMembers", "ApplicationId", "dbo.AspNetUsers");
@@ -181,9 +181,9 @@
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Meetings", "TeamId", "dbo.Teams");
-            DropIndex("dbo.TripleJunctionTables", new[] { "TeamId" });
-            DropIndex("dbo.TripleJunctionTables", new[] { "TeammemberId" });
-            DropIndex("dbo.TripleJunctionTables", new[] { "OrganizationId" });
+            DropForeignKey("dbo.Teams", "OrganizationId", "dbo.Organizations");
+            DropIndex("dbo.TeammemberTeams", new[] { "TeammemberId" });
+            DropIndex("dbo.TeammemberTeams", new[] { "TeamId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -192,16 +192,17 @@
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.TeamMembers", new[] { "ApplicationId" });
             DropIndex("dbo.Messages", new[] { "TeammemberId" });
+            DropIndex("dbo.Teams", new[] { "OrganizationId" });
             DropIndex("dbo.Meetings", new[] { "TeamId" });
-            DropTable("dbo.TripleJunctionTables");
+            DropTable("dbo.TeammemberTeams");
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Organizations");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.TeamMembers");
             DropTable("dbo.Messages");
+            DropTable("dbo.Organizations");
             DropTable("dbo.Teams");
             DropTable("dbo.Meetings");
         }

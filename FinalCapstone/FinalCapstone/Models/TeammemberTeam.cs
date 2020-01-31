@@ -7,13 +7,13 @@ using System.Web;
 
 namespace FinalCapstone.Models
 {
-    public class TripleJunctionTable
+    public class TeammemberTeam
     {
         
         [Key, Column(Order = 0)]
-        [ForeignKey ("Organization")]
-        public int OrganizationId { get; set; }
-        public Organization Organization { get; set; }
+        [ForeignKey("Team")]
+        public int? TeamId { get; set; }
+        public Team Team { get; set; }
 
         [Key, Column(Order = 1)]
         [ForeignKey("Teammember")]
@@ -21,9 +21,7 @@ namespace FinalCapstone.Models
         public TeamMember Teammember{ get; set; }
 
        
-        [ForeignKey("Team")]
-        public int? TeamId { get; set; }
-        public Team Team { get; set; }
+        
 
     }
 }

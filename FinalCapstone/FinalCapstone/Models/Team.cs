@@ -13,7 +13,12 @@ namespace FinalCapstone.Models
         public int TeamId { get; set; }
         public string Name { get; set; }
 
+        public string Members { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+
+        [ForeignKey ("Organization")]
+        public int OrganizationId { get; set; }
+        public Organization Organization { get; set; }
     }
 }

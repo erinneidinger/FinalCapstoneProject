@@ -38,7 +38,8 @@ namespace FinalCapstone.Controllers
         // GET: Organizations/Create
         public ActionResult Create()
         {
-            return View();
+            Organization organization = new Organization();
+            return View(organization);
         }
 
         // POST: Organizations/Create

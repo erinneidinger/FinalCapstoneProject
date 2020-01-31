@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace FinalCapstone.Controllers
@@ -40,7 +41,8 @@ namespace FinalCapstone.Controllers
         // GET: Teams/Create
         public ActionResult Create()
         {
-            return View();
+            Team team = new Team();
+            return View(team);
         }
 
         // POST: Teams/Create
@@ -48,16 +50,35 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeamId,Name,ApplicationId")] Team team)
+        public ActionResult Create(TeamMember teammember)
         {
-            if (ModelState.IsValid)
+            try
             {
+                var userId = User.Identity.GetUserId();
+                teammember.ApplicationId = userId;
+                var newTeammember = db.Teammembers.Where(a => a.ApplicationId == teammember.ApplicationId).FirstOrDefault();
+                var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == newTeammember.TeammemberId).FirstOrDefault();
+                var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
+                var team = db.Teams.Where(a => a.TeamId == foundId.TeamId).FirstOrDefault();
                 db.Teams.Add(team);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AddToJunction");
+            }
+            catch
+            {
+                return View();
             }
 
-            return View(team);
+        }
+        public ActionResult AddToJunction(TeamMember teammember)
+        {
+            teammember.ApplicationId = User.Identity.GetUserId();
+            var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
+            var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
+            var foundTeam = db.TeammemberTeam.Where(a => a.TeamId == foundId.TeamId).FirstOrDefault();
+            db.TeammemberTeam.Add(foundTeam);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Teams/Edit/5

@@ -70,23 +70,25 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create(Meeting meeting, Team team, TeamMember teammember)
-        //{
-            //try
-            //{
-            //    var userId = User.Identity.GetUserId();
-            //    teammember = userId;
+        public ActionResult Create([Bind(Include = "Name,StreetAddress,City,State,Bio,TeamId")] TeamMember teammember)
+        {
+            try
+            {
 
-            //    meeting = await GetLatNLngAsync(meeting);
-            //    db.Meetings.Add(meeting);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-        //}
+                teammember.ApplicationId = User.Identity.GetUserId();
+                var member = db.TeammemberTeam.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
+                var foundTeam = db.TeammemberTeam.Where(a=> a.TeamId == member.TeamId).FirstOrDefault();
+                var foundMeeting = db.Meetings.Where(a => a.TeamId == foundTeam.TeamId).FirstOrDefault();
+                db.Meetings.Add(foundMeeting);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         // GET: Meetings/Edit/5
         public ActionResult Edit(int? id)
