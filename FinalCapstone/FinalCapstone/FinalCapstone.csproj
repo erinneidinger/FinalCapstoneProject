@@ -197,6 +197,26 @@
     <Compile Include="Migrations\202002012354001_createDatabase.designer.cs">
       <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002031614398_newmigraton.cs" />
+    <Compile Include="Migrations\202002031614398_newmigraton.designer.cs">
+      <DependentUpon>202002031614398_newmigraton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031644246_newnewnewmigration.cs" />
+    <Compile Include="Migrations\202002031644246_newnewnewmigration.designer.cs">
+      <DependentUpon>202002031644246_newnewnewmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031658363_UpdateMigrate.cs" />
+    <Compile Include="Migrations\202002031658363_UpdateMigrate.designer.cs">
+      <DependentUpon>202002031658363_UpdateMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002031953129_APIcallMigration.cs" />
+    <Compile Include="Migrations\202002031953129_APIcallMigration.designer.cs">
+      <DependentUpon>202002031953129_APIcallMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002032010307_addName.cs" />
+    <Compile Include="Migrations\202002032010307_addName.designer.cs">
+      <DependentUpon>202002032010307_addName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\KeyPrivate.cs" />
@@ -297,6 +317,7 @@
     <Content Include="Views\Meetings\Details.cshtml" />
     <Content Include="Views\Meetings\Edit.cshtml" />
     <Content Include="Views\Meetings\Index.cshtml" />
+    <Content Include="Views\Meetings\SeeRoute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -317,6 +338,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002012354001_createDatabase.resx">
       <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031614398_newmigraton.resx">
+      <DependentUpon>202002031614398_newmigraton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031644246_newnewnewmigration.resx">
+      <DependentUpon>202002031644246_newnewnewmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031658363_UpdateMigrate.resx">
+      <DependentUpon>202002031658363_UpdateMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002031953129_APIcallMigration.resx">
+      <DependentUpon>202002031953129_APIcallMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002032010307_addName.resx">
+      <DependentUpon>202002032010307_addName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

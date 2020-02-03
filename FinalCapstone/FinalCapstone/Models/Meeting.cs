@@ -11,13 +11,15 @@ namespace FinalCapstone.Models
     {
         [Key]
         public int MeetingId { get; set; }
-        public DateTime Time { get; set; }
+        public string Name { get; set; }
+        public string Time { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
+        public string APICall = KeyPrivate.GeoMapURL;
         
         [ForeignKey ("team")]
         public int TeamId { get; set; }

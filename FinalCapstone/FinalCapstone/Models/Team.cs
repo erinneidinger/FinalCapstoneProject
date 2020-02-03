@@ -11,6 +11,8 @@ namespace FinalCapstone.Models
     {
         [Key]
         public int TeamId { get; set; }
+
+        [Display(Name = "Team Name")]
         public string Name { get; set; }
 
         public string Members { get; set; }

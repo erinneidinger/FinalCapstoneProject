@@ -21,8 +21,9 @@ namespace FinalCapstone.Controllers
         // GET: Meetings
         public ActionResult Index()
         {
-            var meetings = db.Meetings.Include(m => m.team);
-            return View(meetings.ToList());
+            var meetings = db.Meetings.Include(m => m.team).ToList();
+            ViewBag.TeamId = meetings[0].TeamId;
+            return View(meetings);
         }
 
         // GET: Meetings/Details/5
@@ -32,17 +33,33 @@ namespace FinalCapstone.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting meeting = db.Meetings.Find(id);
+            var meeting = db.Meetings.Where(a => a.MeetingId == id).FirstOrDefault();
+            meeting.APICall = KeyPrivate.GeoMapURL;
             if (meeting == null)
             {
                 return HttpNotFound();
             }
+            db.SaveChanges();
+            return View(meeting);
+        }
+
+        public ActionResult SeeRoute(int? id)
+        {
+            
+            var meeting = db.Meetings.Where(a => a.TeamId == id).ToList();
+            ViewBag.APICall = meeting[0].APICall;
+            
+            if (meeting == null)
+            {
+                return HttpNotFound();
+            }
+            db.SaveChanges();
             return View(meeting);
         }
 
         public async Task<Meeting> GetLatNLngAsync(Meeting meeting)
         {
-            string requestUri = KeyPrivate.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + "+" + meeting.State + KeyPrivate.KeyKey + KeyPrivate.GoogleAPIKey;
+            string requestUri = KeyPrivate.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + ",+" + meeting.State + KeyPrivate.OtherKey + KeyPrivate.GoogleAPIKey;
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(requestUri);
             string jsonResult = await response.Content.ReadAsStringAsync();
@@ -53,7 +70,7 @@ namespace FinalCapstone.Controllers
                 meeting.Longitude = location.results[0].geometry.location.lng.ToString();
                 return meeting;
             }
-
+            db.Meetings.Add(meeting);
             db.SaveChanges();
             return meeting;
         }
@@ -70,24 +87,23 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,StreetAddress,City,State,Bio,TeamId")] TeamMember teammember)
+        public async Task<ActionResult> Create(Meeting meeting)
         {
             try
             {
-
-                teammember.ApplicationId = User.Identity.GetUserId();
+                var userId = User.Identity.GetUserId();
+                var teammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
                 var member = db.TeammemberTeam.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
-                var foundTeam = db.TeammemberTeam.Where(a=> a.TeamId == member.TeamId).FirstOrDefault();
-                var foundMeeting = db.Meetings.Where(a => a.TeamId == foundTeam.TeamId).FirstOrDefault();
-                foundMeeting = await GetLatNLngAsync(foundMeeting);
-                db.Meetings.Add(foundMeeting);
+                var foundTeam = db.TeammemberTeam.Where(a => a.TeamId == member.TeamId).FirstOrDefault();
+                meeting.TeamId = foundTeam.TeamId;
+                meeting = await GetLatNLngAsync(meeting);
+                db.Meetings.Add(meeting);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return View(meeting);
             }
         }
 

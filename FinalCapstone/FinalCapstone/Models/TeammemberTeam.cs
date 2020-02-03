@@ -12,7 +12,7 @@ namespace FinalCapstone.Models
         
         [Key, Column(Order = 0)]
         [ForeignKey("Team")]
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; }
         public Team Team { get; set; }
 
         [Key, Column(Order = 1)]

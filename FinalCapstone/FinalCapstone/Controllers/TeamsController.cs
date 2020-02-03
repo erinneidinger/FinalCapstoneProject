@@ -54,7 +54,6 @@ namespace FinalCapstone.Controllers
         {
             try
             {
-                //EXCEPTION PROBLEM*************************************************
                 var userId = User.Identity.GetUserId();
                 var newOrganization = db.Organizations.Where(a => a.ApplicationId == userId).FirstOrDefault();
                 var foundOrganization = db.Organizations.Where(a => a.OrganizationId == newOrganization.OrganizationId).FirstOrDefault();

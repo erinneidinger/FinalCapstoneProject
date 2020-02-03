@@ -1,0 +1,44 @@
+﻿@model IEnumerable<FinalCapstone.Models.Meeting>
+
+@{
+    ViewBag.Title = "SeeRoute";
+}
+
+<h2>See Route</h2>
+<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Find my Events:</h2>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            
+            var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: 43.0389, lng: -87.9065 }});
+
+            $.each(Model, function (i, val) {
+                var venLocation = new { lat: val.Latitude, lng: val.Longitude };
+                var marker = new google.maps.Marker({ position: venLocation, map: map });
+            })
+          
+        //var infoWindow = new google.maps.InfoWindow({
+        //content: (".details")
+        //marker.addListener('click', function () {
+        //    infoWindow.open(map, marker);
+        //    });
+        //}
+            }
+  
+    </script>
+    <script src="@ViewBag.APICall" async defer></script>
+</body>
+</html>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
