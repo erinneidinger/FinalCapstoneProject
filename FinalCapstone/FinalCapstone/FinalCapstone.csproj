@@ -193,12 +193,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001311614276_NewMigration.cs" />
-    <Compile Include="Migrations\202001311614276_NewMigration.designer.cs">
-      <DependentUpon>202001311614276_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202002012354001_createDatabase.cs" />
+    <Compile Include="Migrations\202002012354001_createDatabase.designer.cs">
+      <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\KeyPrivate.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\GeoCode.cs" />
     <Compile Include="Models\GeoDirection.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\PrivateKey.cs" />
     <Compile Include="Models\TeammemberTeam.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
@@ -315,8 +315,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001311614276_NewMigration.resx">
-      <DependentUpon>202001311614276_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002012354001_createDatabase.resx">
+      <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

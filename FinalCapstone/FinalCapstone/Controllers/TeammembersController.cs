@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
@@ -48,13 +49,13 @@ namespace FinalCapstone.Controllers
         //    if (response.IsSuccessStatusCode)
         //    {
         //        GeoCode location = JsonConvert.DeserializeObject<GeoCode>(jsonResult);
-        //        Latitude = location.results [0].geometry.location.lat;
-        //        Longitude = location.results [0].geometry.location.lng;
-        //        return ;
+        //        Latitude = location.results[0].geometry.location.lat;
+        //        Longitude = location.results[0].geometry.location.lng;
+        //        return;
         //    }
 
         //    db.SaveChanges();
-        //    return ;
+        //    return;
         //}
         // GET: TeamMembers/Create
         public ActionResult Create()
@@ -68,14 +69,17 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeammemberId,FirstName,LastName,StreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember teammember)
+        public ActionResult Create(TeamMember teammember)
         {
             try
             {
-                teammember.ApplicationId = User.Identity.GetUserId();
+                var userId = User.Identity.GetUserId();
+                teammember.ApplicationId = userId;
+                var foundMember = db.Users.Where(e => e.Id == teammember.ApplicationId).FirstOrDefault();
+                teammember.Email = foundMember.Email;
                 db.Teammembers.Add(teammember);
                 db.SaveChanges();
-                return RedirectToAction("AddToJunction");
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -83,16 +87,19 @@ namespace FinalCapstone.Controllers
             }
            
         }
-
-        public ActionResult AddToJunction(TeamMember teammember)
-        {
-            teammember.ApplicationId = User.Identity.GetUserId();
-            var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
-            var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
-            db.TeammemberTeam.Add(foundId);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //create team first, then junction table
+        //public ActionResult AddToJunction(TeamMember teammember)
+        //{
+            
+        //    teammember.ApplicationId = User.Identity.GetUserId();
+        //    var newTeammember = db.Teammembers.Where(a => a.ApplicationId == teammember.ApplicationId).FirstOrDefault();
+        //    var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == newTeammember.TeammemberId).FirstOrDefault();
+        //    TeammemberTeam teammemberteam = new TeammemberTeam();
+        //    teammemberteam.TeammemberId = foundTeammember.TeammemberId;
+        //    db.TeammemberTeam.Add(teammemberteam);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         // GET: TeamMembers/Edit/5
         public ActionResult Edit(int? id)

@@ -42,7 +42,7 @@ namespace FinalCapstone.Controllers
 
         public async Task<Meeting> GetLatNLngAsync(Meeting meeting)
         {
-            string requestUri = PrivateKey.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + "+" + meeting.State + PrivateKey.KeyKey + PrivateKey.GoogleAPIKey;
+            string requestUri = KeyPrivate.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + "+" + meeting.State + KeyPrivate.KeyKey + KeyPrivate.GoogleAPIKey;
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(requestUri);
             string jsonResult = await response.Content.ReadAsStringAsync();
@@ -70,7 +70,7 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,StreetAddress,City,State,Bio,TeamId")] TeamMember teammember)
+        public async Task<ActionResult> Create([Bind(Include = "Name,StreetAddress,City,State,Bio,TeamId")] TeamMember teammember)
         {
             try
             {
@@ -79,6 +79,7 @@ namespace FinalCapstone.Controllers
                 var member = db.TeammemberTeam.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
                 var foundTeam = db.TeammemberTeam.Where(a=> a.TeamId == member.TeamId).FirstOrDefault();
                 var foundMeeting = db.Meetings.Where(a => a.TeamId == foundTeam.TeamId).FirstOrDefault();
+                foundMeeting = await GetLatNLngAsync(foundMeeting);
                 db.Meetings.Add(foundMeeting);
                 db.SaveChanges();
                 return RedirectToAction("Index");

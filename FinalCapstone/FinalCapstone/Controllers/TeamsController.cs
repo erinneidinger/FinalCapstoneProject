@@ -50,16 +50,15 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TeamMember teammember)
+        public ActionResult Create(Team team)
         {
             try
             {
+                //EXCEPTION PROBLEM*************************************************
                 var userId = User.Identity.GetUserId();
-                teammember.ApplicationId = userId;
-                var newTeammember = db.Teammembers.Where(a => a.ApplicationId == teammember.ApplicationId).FirstOrDefault();
-                var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == newTeammember.TeammemberId).FirstOrDefault();
-                var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
-                var team = db.Teams.Where(a => a.TeamId == foundId.TeamId).FirstOrDefault();
+                var newOrganization = db.Organizations.Where(a => a.ApplicationId == userId).FirstOrDefault();
+                var foundOrganization = db.Organizations.Where(a => a.OrganizationId == newOrganization.OrganizationId).FirstOrDefault();
+                team.OrganizationId = foundOrganization.OrganizationId;
                 db.Teams.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("AddToJunction");
@@ -68,15 +67,16 @@ namespace FinalCapstone.Controllers
             {
                 return View();
             }
-
         }
-        public ActionResult AddToJunction(TeamMember teammember)
+        public ActionResult AddToJunction(TeammemberTeam teammemberteam)
         {
-            teammember.ApplicationId = User.Identity.GetUserId();
-            var foundTeammember = db.Teammembers.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
-            var foundId = db.TeammemberTeam.Where(a => a.TeammemberId == foundTeammember.TeammemberId).FirstOrDefault();
-            var foundTeam = db.TeammemberTeam.Where(a => a.TeamId == foundId.TeamId).FirstOrDefault();
-            db.TeammemberTeam.Add(foundTeam);
+            var userId = User.Identity.GetUserId();
+            var newTeammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            var foundOrganzation = db.Organizations.Where(a => a.ApplicationId == newTeammember.ApplicationId).FirstOrDefault();
+            var foundTeam = db.Teams.Where(a => a.OrganizationId == foundOrganzation.OrganizationId).FirstOrDefault();
+            teammemberteam.TeamId = foundTeam.TeamId;
+            teammemberteam.TeammemberId = newTeammember.TeammemberId;
+            db.TeammemberTeam.Add(teammemberteam);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

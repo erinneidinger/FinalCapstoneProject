@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewMigration : DbMigration
+    public partial class createDatabase : DbMigration
     {
         public override void Up()
         {
@@ -48,42 +48,9 @@
                         City = c.String(),
                         State = c.String(),
                         Bio = c.String(),
-                    })
-                .PrimaryKey(t => t.OrganizationId);
-            
-            CreateTable(
-                "dbo.Messages",
-                c => new
-                    {
-                        MessageId = c.Int(nullable: false, identity: true),
-                        SenderId = c.Int(nullable: false),
-                        ReceiverId = c.Int(nullable: false),
-                        Subject = c.String(),
-                        MessageToPost = c.String(),
-                        DatePosted = c.DateTime(nullable: false),
-                        TeammemberId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.MessageId)
-                .ForeignKey("dbo.TeamMembers", t => t.TeammemberId, cascadeDelete: true)
-                .Index(t => t.TeammemberId);
-            
-            CreateTable(
-                "dbo.TeamMembers",
-                c => new
-                    {
-                        TeammemberId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        StreetAddress = c.String(),
-                        City = c.String(),
-                        State = c.String(),
-                        Email = c.String(),
-                        Requests = c.String(),
-                        Latitude = c.Double(nullable: false),
-                        Longitude = c.Double(nullable: false),
                         ApplicationId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.TeammemberId)
+                .PrimaryKey(t => t.OrganizationId)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationId)
                 .Index(t => t.ApplicationId);
             
@@ -146,6 +113,42 @@
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Messages",
+                c => new
+                    {
+                        MessageId = c.Int(nullable: false, identity: true),
+                        SenderId = c.Int(nullable: false),
+                        ReceiverId = c.Int(nullable: false),
+                        Subject = c.String(),
+                        MessageToPost = c.String(),
+                        DatePosted = c.DateTime(nullable: false),
+                        TeammemberId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.MessageId)
+                .ForeignKey("dbo.TeamMembers", t => t.TeammemberId, cascadeDelete: true)
+                .Index(t => t.TeammemberId);
+            
+            CreateTable(
+                "dbo.TeamMembers",
+                c => new
+                    {
+                        TeammemberId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        StreetAddress = c.String(),
+                        City = c.String(),
+                        State = c.String(),
+                        Email = c.String(),
+                        Requests = c.String(),
+                        Latitude = c.Double(nullable: false),
+                        Longitude = c.Double(nullable: false),
+                        ApplicationId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.TeammemberId)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationId)
+                .Index(t => t.ApplicationId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -177,31 +180,33 @@
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Messages", "TeammemberId", "dbo.TeamMembers");
             DropForeignKey("dbo.TeamMembers", "ApplicationId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Meetings", "TeamId", "dbo.Teams");
+            DropForeignKey("dbo.Teams", "OrganizationId", "dbo.Organizations");
+            DropForeignKey("dbo.Organizations", "ApplicationId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Meetings", "TeamId", "dbo.Teams");
-            DropForeignKey("dbo.Teams", "OrganizationId", "dbo.Organizations");
             DropIndex("dbo.TeammemberTeams", new[] { "TeammemberId" });
             DropIndex("dbo.TeammemberTeams", new[] { "TeamId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.TeamMembers", new[] { "ApplicationId" });
+            DropIndex("dbo.Messages", new[] { "TeammemberId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.TeamMembers", new[] { "ApplicationId" });
-            DropIndex("dbo.Messages", new[] { "TeammemberId" });
+            DropIndex("dbo.Organizations", new[] { "ApplicationId" });
             DropIndex("dbo.Teams", new[] { "OrganizationId" });
             DropIndex("dbo.Meetings", new[] { "TeamId" });
             DropTable("dbo.TeammemberTeams");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.TeamMembers");
+            DropTable("dbo.Messages");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.TeamMembers");
-            DropTable("dbo.Messages");
             DropTable("dbo.Organizations");
             DropTable("dbo.Teams");
             DropTable("dbo.Meetings");

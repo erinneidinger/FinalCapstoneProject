@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using FinalCapstone.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FinalCapstone.Controllers
 {
@@ -47,16 +49,21 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrganizationId,Name,City,State,Bio,ApplicationId")] Organization organization)
+        public ActionResult Create(Organization organization)
         {
-            if (ModelState.IsValid)
+            try
             {
+                var userId = User.Identity.GetUserId();
+                organization.ApplicationId = userId;
                 db.Organizations.Add(organization);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(organization);
+            catch
+            {
+                return View(organization);
+            }
+            
         }
 
         // GET: Organizations/Edit/5

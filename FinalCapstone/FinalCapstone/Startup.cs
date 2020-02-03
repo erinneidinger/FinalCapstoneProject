@@ -35,10 +35,10 @@ namespace FinalCapstone
                 //Here we create a Admin super user who will maintain the website                 
 
                 var user = new ApplicationUser();
-                user.UserName = "shanu";
-                user.Email = "syedshanumcain@gmail.com";
+                user.UserName = "Admin";
+                user.Email = "Admin@gmail.com";
 
-                string userPWD = "A@Z200711";
+                string userPWD = "Password1!";
 
                 var chkUser = UserManager.Create(user, userPWD);
 
@@ -53,7 +53,7 @@ namespace FinalCapstone
             // creating Creating Manager role   
             if (!roleManager.RoleExists("TeamMember"))
             {
-                var role = new IdentityRole();
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "TeamMember";
                 roleManager.Create(role);
 

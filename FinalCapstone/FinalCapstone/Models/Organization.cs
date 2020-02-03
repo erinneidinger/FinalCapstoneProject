@@ -15,5 +15,9 @@ namespace FinalCapstone.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Bio { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
