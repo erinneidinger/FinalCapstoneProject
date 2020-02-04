@@ -43,6 +43,22 @@ namespace FinalCapstone.Controllers
             return View(meeting);
         }
 
+        public ActionResult Directions(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var meeting = db.Meetings.Where(a => a.MeetingId == id).FirstOrDefault();
+            meeting.APICall = KeyPrivate.GeoDirectURL;
+            if (meeting == null)
+            {
+                return HttpNotFound();
+            }
+            db.SaveChanges();
+            return View(meeting);
+        }
+
         public ActionResult SeeRoute(int? id)
         {
             
@@ -74,6 +90,30 @@ namespace FinalCapstone.Controllers
             db.SaveChanges();
             return meeting;
         }
+
+        //public async Task<Meeting> GetDirections(double startLatitude, double startLongitude, double endLatitude, double endLongitude)
+        //{
+        //    string requestUri = KeyPrivate.URLDirections + "origin={0},{1}&destination={2},{3}&sensor=false";
+        //    requestUri = string.Format(requestUri,
+        //            startLatitude, startLongitude,
+        //            endLatitude.ToString(),
+        //            endLongitude.ToString()
+        //            );
+
+        //    HttpClient client = new HttpClient();
+        //    HttpResponseMessage response = await client.GetAsync(requestUri);
+        //    string jsonResult = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        GeoDirection location = JsonConvert.DeserializeObject<GeoDirection>(jsonResult);
+        //        meeting.Latitude = location.results[0].geometry.location.lat.ToString();
+        //        meeting.Longitude = location.results[0].geometry.location.lng.ToString();
+        //        return meeting;
+        //    }
+        //    db.Meetings.Add(meeting);
+        //    db.SaveChanges();
+        //    return meeting;
+        //}
 
         // GET: Meetings/Create
         public ActionResult Create()

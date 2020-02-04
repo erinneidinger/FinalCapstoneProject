@@ -66,6 +66,14 @@ namespace FinalCapstone.Controllers
             
         }
 
+        public ActionResult TeamsList(int id)
+        {
+            var foundTeams = db.Teams.Where(a => a.OrganizationId == id).ToList();
+            var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
+            ViewBag.OrganizationName = foundOrganization.Name;
+            return View(foundTeams);
+        }
+
         // GET: Organizations/Edit/5
         public ActionResult Edit(int id)
         {

@@ -37,6 +37,7 @@
             @Html.DisplayFor(modelItem => item.Bio)
         </td>
         <td>
+            @Html.ActionLink("Teams", "TeamsList", new { id = item.OrganizationId }) |
             @Html.ActionLink("Create Teams", "Create", "Teams") |
             @Html.ActionLink("Edit", "Edit", new { id = item.OrganizationId }) |
             @Html.ActionLink("Details", "Details", new { id = item.OrganizationId }) |

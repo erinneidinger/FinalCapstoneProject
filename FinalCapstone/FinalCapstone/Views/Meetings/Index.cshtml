@@ -57,6 +57,7 @@
     </td>
 
     <td>
+        @Html.ActionLink("Directions","Directions", new { id = item.MeetingId }) |
         @Html.ActionLink("Edit", "Edit", new { id = item.MeetingId }) |
         @Html.ActionLink("Details", "Details", new { id = item.MeetingId }) |
         @Html.ActionLink("Delete", "Delete", new { id = item.MeetingId })

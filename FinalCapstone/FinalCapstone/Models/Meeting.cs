@@ -20,6 +20,7 @@ namespace FinalCapstone.Models
         public string Longitude { get; set; }
 
         public string APICall = KeyPrivate.GeoMapURL;
+        public string APIDirections = KeyPrivate.GeoDirectURL;
         
         [ForeignKey ("team")]
         public int TeamId { get; set; }

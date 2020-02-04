@@ -122,6 +122,12 @@
     <Reference Include="Twilio, Version=5.37.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Twilio.5.37.3\lib\net451\Twilio.dll</HintPath>
     </Reference>
+    <Reference Include="Twilio.AspNet.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.AspNet.Common.5.33.1\lib\net45\Twilio.AspNet.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.AspNet.Mvc, Version=5.33.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Twilio.AspNet.Mvc.5.33.1\lib\net451\Twilio.AspNet.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -187,6 +193,7 @@
     <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\TeammembersController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -216,6 +223,30 @@
     <Compile Include="Migrations\202002032010307_addName.cs" />
     <Compile Include="Migrations\202002032010307_addName.designer.cs">
       <DependentUpon>202002032010307_addName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002041603273_twiliomigrae.cs" />
+    <Compile Include="Migrations\202002041603273_twiliomigrae.designer.cs">
+      <DependentUpon>202002041603273_twiliomigrae.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002041706301_GeoDirections.cs" />
+    <Compile Include="Migrations\202002041706301_GeoDirections.designer.cs">
+      <DependentUpon>202002041706301_GeoDirections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002041810179_directionmigration.cs" />
+    <Compile Include="Migrations\202002041810179_directionmigration.designer.cs">
+      <DependentUpon>202002041810179_directionmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002042048390_geoLocate.cs" />
+    <Compile Include="Migrations\202002042048390_geoLocate.designer.cs">
+      <DependentUpon>202002042048390_geoLocate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002042051400_newmig.cs" />
+    <Compile Include="Migrations\202002042051400_newmig.designer.cs">
+      <DependentUpon>202002042051400_newmig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002042053357_GeoMapURL.cs" />
+    <Compile Include="Migrations\202002042053357_GeoMapURL.designer.cs">
+      <DependentUpon>202002042053357_GeoMapURL.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -318,9 +349,12 @@
     <Content Include="Views\Meetings\Edit.cshtml" />
     <Content Include="Views\Meetings\Index.cshtml" />
     <Content Include="Views\Meetings\SeeRoute.cshtml" />
+    <Content Include="Views\Organizations\TeamsList.cshtml" />
+    <Content Include="Views\Meetings\Directions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SMS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -353,6 +387,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002032010307_addName.resx">
       <DependentUpon>202002032010307_addName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002041603273_twiliomigrae.resx">
+      <DependentUpon>202002041603273_twiliomigrae.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002041706301_GeoDirections.resx">
+      <DependentUpon>202002041706301_GeoDirections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002041810179_directionmigration.resx">
+      <DependentUpon>202002041810179_directionmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002042048390_geoLocate.resx">
+      <DependentUpon>202002042048390_geoLocate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002042051400_newmig.resx">
+      <DependentUpon>202002042051400_newmig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002042053357_GeoMapURL.resx">
+      <DependentUpon>202002042053357_GeoMapURL.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

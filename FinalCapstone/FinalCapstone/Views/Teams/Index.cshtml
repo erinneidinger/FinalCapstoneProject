@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "Meetings")
+    @Html.ActionLink("Create new Team", "Create", "Teams")
 </p>
 <table class="table">
     <tr>
@@ -25,11 +25,12 @@
         </td>
         
         <td>
+            @Html.ActionLink("Send Emergency Text!", "SendSms", "SMS") |
             @Html.ActionLink("Team Route", "Details", "Meetings") |
-            @Html.ActionLink("Create Events","Create","Meetings") |
-            @Html.ActionLink("Edit", "Edit", new { id=item.TeamId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TeamId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TeamId })
+            @Html.ActionLink("Create Events", "Create", "Meetings") |
+            @Html.ActionLink("Edit", "Edit", new { id = item.TeamId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.TeamId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TeamId })
         </td>
     </tr>
 }

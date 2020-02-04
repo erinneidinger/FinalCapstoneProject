@@ -3,8 +3,6 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
 <html>
 <head>
     <style>
@@ -17,30 +15,52 @@
 <body>
     <h2>Find my Teammates:</h2>
     <div id="map"></div>
-    <script>
-        function initMap() {
-            var venLocation = { lat: @Model.Latitude, lng: @Model.Longitude };
+    <script>var map, infoWindow;
 
-            var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: venLocation });
+    function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 12
+    });
+    infoWindow = new google.maps.InfoWindow;
 
-            var marker = new google.maps.Marker({ position: venLocation, map: map, animation: google.maps.Animation.BOUNCE });
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+    var pos = {
+    lat: position.coords.latitude,
+    lng: position.coords.longitude
+    };
 
-    //var infoWindow = new google.maps.InforWindow({
-    //    content: (".details")
-    //});
+    infoWindow.setPosition(pos);
+    infoWindow.setContent('Location found.');
+    infoWindow.open(map);
+    map.setCenter(pos);
+    }, function() {
+    handleLocationError(true, infoWindow, map.getCenter());
+    });
+    } else {
+    // Browser doesn't support Geolocation
 
-    //marker.addListener('click', function () {
-    //    infoWindow.open(map, marker);
-    //    });
+    handleLocationError(false, infoWindow, map.getCenter());
+        }
+
     }
 
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+        }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=" + PrivateKey. async defer></script>
+    <script async defer  src= @Model.APICall>
+    </script>
 </body>
 </html>
 
 <div>
-    <h4>Team</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>

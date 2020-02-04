@@ -22,7 +22,7 @@
             
             var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: 43.0389, lng: -87.9065 }});
 
-            $.each(Model, function (i, val) {
+            $(Model).each(function (i, val) {
                 var venLocation = new { lat: val.Latitude, lng: val.Longitude };
                 var marker = new google.maps.Marker({ position: venLocation, map: map });
             })
