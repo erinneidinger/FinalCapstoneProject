@@ -102,18 +102,11 @@ namespace FinalCapstone.Controllers
         //}
 
         // GET: TeamMembers/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+        public ActionResult Edit(int id)
+        { 
             TeamMember TeamMember = db.Teammembers.Find(id);
-            if (TeamMember == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email", TeamMember.ApplicationId);
+           
+            //ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email", TeamMember.ApplicationId);
             return View(TeamMember);
         }
 
@@ -122,15 +115,15 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MemberId,FirstName,LastNameStreetAddress,City,State,Email,Latitude,Longitude,ApplicationId")] TeamMember TeamMember)
+        public ActionResult Edit(TeamMember TeamMember, int id)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(TeamMember).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(TeamMember);
             }
-            ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email", TeamMember.ApplicationId);
+            //ViewBag.ApplicationId = new SelectList(db.Users, "Id", "Email", TeamMember.ApplicationId);
             return View(TeamMember);
         }
 

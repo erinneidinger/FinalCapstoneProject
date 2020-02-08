@@ -19,10 +19,14 @@ namespace FinalCapstone.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Meetings
-        public ActionResult Index()
+        public ActionResult Index(int Id)
         {
-            var meetings = db.Meetings.Include(m => m.team).ToList();
-            ViewBag.TeamId = meetings[0].TeamId;
+            var meetings = db.Meetings.Where(a => a.TeamId == Id).ToList();
+            if(meetings.Count != 0)
+            {
+                ViewBag.TeamId = meetings[0].TeamId;
+                
+            }
             return View(meetings);
         }
 
@@ -34,7 +38,7 @@ namespace FinalCapstone.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var meeting = db.Meetings.Where(a => a.MeetingId == id).FirstOrDefault();
-            meeting.APICall = KeyPrivate.GeoMapURL;
+            meeting.APICall = SecretKeys.MapURL;
             if (meeting == null)
             {
                 return HttpNotFound();
@@ -49,33 +53,35 @@ namespace FinalCapstone.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var meeting = db.Meetings.Where(a => a.MeetingId == id).FirstOrDefault();
-            meeting.APICall = KeyPrivate.GeoDirectURL;
+            var meeting = db.Meetings.Where(a => a.TeamId == id).ToList();
+            ViewBag.APICall = meeting[0].APICall;
+            ViewBag.Meeting = meeting;
             if (meeting == null)
             {
                 return HttpNotFound();
             }
-            db.SaveChanges();
+      
             return View(meeting);
         }
 
-        public ActionResult SeeRoute(int? id)
+        public ActionResult SeeRoute(int? id, Meeting meeting)
         {
-            
-            var meeting = db.Meetings.Where(a => a.TeamId == id).ToList();
-            ViewBag.APICall = meeting[0].APICall;
-            
-            if (meeting == null)
+
+            var meetings = db.Meetings.Where(a => a.TeamId == id).ToList();
+            ViewBag.APICall = meeting.APICall;
+            ViewBag.Meeting = meetings;
+
+            if (meetings.Count == 0)
             {
-                return HttpNotFound();
+                return View("Create");
             }
-            db.SaveChanges();
-            return View(meeting);
+            
+            return View(meetings);
         }
 
         public async Task<Meeting> GetLatNLngAsync(Meeting meeting)
         {
-            string requestUri = KeyPrivate.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + ",+" + meeting.State + KeyPrivate.OtherKey + KeyPrivate.GoogleAPIKey;
+            string requestUri = SecretKeys.URLGeocode + meeting.StreetAddress + ",+" + meeting.City + ",+" + meeting.State + SecretKeys.OtherKey + SecretKeys.APIKey;
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(requestUri);
             string jsonResult = await response.Content.ReadAsStringAsync();
@@ -86,8 +92,7 @@ namespace FinalCapstone.Controllers
                 meeting.Longitude = location.results[0].geometry.location.lng.ToString();
                 return meeting;
             }
-            db.Meetings.Add(meeting);
-            db.SaveChanges();
+            
             return meeting;
         }
 
@@ -127,19 +132,15 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Meeting meeting)
+        public async Task<ActionResult> Create(Meeting meeting, int id)
         {
             try
             {
-                var userId = User.Identity.GetUserId();
-                var teammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
-                var member = db.TeammemberTeam.Where(a => a.TeammemberId == teammember.TeammemberId).FirstOrDefault();
-                var foundTeam = db.TeammemberTeam.Where(a => a.TeamId == member.TeamId).FirstOrDefault();
-                meeting.TeamId = foundTeam.TeamId;
+                meeting.TeamId = id;
                 meeting = await GetLatNLngAsync(meeting);
                 db.Meetings.Add(meeting);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = meeting.TeamId });
             }
             catch (Exception e)
             {
@@ -148,7 +149,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Meetings/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -159,7 +160,7 @@ namespace FinalCapstone.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TeamId = new SelectList(db.Teams, "TeamId", "Name", meeting.TeamId);
+            
             return View(meeting);
         }
 
@@ -168,15 +169,17 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocationId,Time,StreetAddress,City,State,Latitude,Longitude,TeamId")] Meeting meeting)
+        public ActionResult Edit( Meeting meeting, int id)
         {
+            ///Finish this connection up first!
             if (ModelState.IsValid)
             {
-                db.Entry(meeting).State = EntityState.Modified;
+                var foundMeeting = db.Meetings.Where(a => a.MeetingId == id).FirstOrDefault();
+                //meeting.TeamId = foundMeeting.TeamId;
+                db.Entry(foundMeeting).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(foundMeeting);
             }
-            ViewBag.TeamId = new SelectList(db.Teams, "TeamId", "Name", meeting.TeamId);
             return View(meeting);
         }
 

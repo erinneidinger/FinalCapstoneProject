@@ -25,10 +25,8 @@
         </td>
         
         <td>
-            @Html.ActionLink("Send Emergency Text!", "SendSms", "SMS") |
-            @Html.ActionLink("Team Route", "Details", "Meetings") |
-            @Html.ActionLink("Create Events", "Create", "Meetings") |
-            @Html.ActionLink("Edit", "Edit", new { id = item.TeamId }) |
+
+            @Html.ActionLink("Join Team", "AddToJunction", "Teams", new { id = item.TeamId }, null) |
             @Html.ActionLink("Details", "Details", new { id = item.TeamId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.TeamId })
         </td>

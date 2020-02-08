@@ -1,41 +1,61 @@
-﻿@model IEnumerable<FinalCapstone.Models.Organization>
+﻿@model IEnumerable<FinalCapstone.Models.Team>
 
 @{
     ViewBag.Title = "TeamsList";
 }
 
 <h2>@ViewBag.OrganizationName Organization</h2>
-<p>@Html.ActionLink("Create New Teams", "Create", "Teams") | @Html.ActionLink("Send Emergency Text!", "SendSms", "SMS")</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Members)
-        </th>
 
-        <th></th>
-    </tr>
+@if (@ViewBag.Junction != null)
+{
+    <p>@Html.ActionLink("Create New Teams", "Create", "Teams", new { id = @ViewBag.OrganizationId }, null) | @Html.ActionLink("Create Request", "Create", "Requests") | @Html.ActionLink("Send Emergency Text!", "SendSms", "SMS")</p>
+}
 
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Members)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            @if (@ViewBag.Junction != null)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Counter)
+                </th>
+            }
+                <th></th>
+            </tr>
 
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        @if (@ViewBag.Junction != null)
+        {
             <td>
-                @Html.ActionLink("Team Route", "SeeRoute", "Meetings") |
-                @Html.ActionLink("Join Team", "AddToJunction", "Teams") |
-                @Html.ActionLink("Create Events", "Create", "Meetings") |
-                @Html.ActionLink("Details", "Details", new { id = item.TeamId })
+                @Html.DisplayFor(modelItem => item.Counter)
+            </td>
+        }
+            <td>
+                @if (@ViewBag.Junction != null)
+                {
+                    <div>
+                        @Html.ActionLink("Team Route", "SeeRoute", "Meetings", new { id = item.TeamId }, null) |
+                        @Html.ActionLink("See Requests", "Index", "Requests", new { id = item.TeamId }, null) |
+                        @Html.ActionLink("Create Events", "Create", "Meetings", new { id = item.TeamId }, null) |
+                        @Html.ActionLink("Details", "Details", "Teams", new { id = item.TeamId }, null)
+                    </div>
+                }
+                @if (@ViewBag.Junction == null)
+                {
+                    <div>
+                        @Html.ActionLink("Join", "AddToJunction", "Teams", new { id = item.TeamId }, null)
+                    </div>
+                }
 
             </td>
         </tr>
-    }
+        }
 
-</table>
+    </table>

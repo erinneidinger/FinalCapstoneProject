@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -26,6 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -192,6 +194,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\TeammembersController.cs" />
@@ -200,65 +203,32 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002012354001_createDatabase.cs" />
-    <Compile Include="Migrations\202002012354001_createDatabase.designer.cs">
-      <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202002071754359_newmig.cs" />
+    <Compile Include="Migrations\202002071754359_newmig.designer.cs">
+      <DependentUpon>202002071754359_newmig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002031614398_newmigraton.cs" />
-    <Compile Include="Migrations\202002031614398_newmigraton.designer.cs">
-      <DependentUpon>202002031614398_newmigraton.cs</DependentUpon>
+    <Compile Include="Migrations\202002071759475_nemigrate.cs" />
+    <Compile Include="Migrations\202002071759475_nemigrate.designer.cs">
+      <DependentUpon>202002071759475_nemigrate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002031644246_newnewnewmigration.cs" />
-    <Compile Include="Migrations\202002031644246_newnewnewmigration.designer.cs">
-      <DependentUpon>202002031644246_newnewnewmigration.cs</DependentUpon>
+    <Compile Include="Migrations\202002071807116_MessageMig.cs" />
+    <Compile Include="Migrations\202002071807116_MessageMig.designer.cs">
+      <DependentUpon>202002071807116_MessageMig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002031658363_UpdateMigrate.cs" />
-    <Compile Include="Migrations\202002031658363_UpdateMigrate.designer.cs">
-      <DependentUpon>202002031658363_UpdateMigrate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002031953129_APIcallMigration.cs" />
-    <Compile Include="Migrations\202002031953129_APIcallMigration.designer.cs">
-      <DependentUpon>202002031953129_APIcallMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002032010307_addName.cs" />
-    <Compile Include="Migrations\202002032010307_addName.designer.cs">
-      <DependentUpon>202002032010307_addName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002041603273_twiliomigrae.cs" />
-    <Compile Include="Migrations\202002041603273_twiliomigrae.designer.cs">
-      <DependentUpon>202002041603273_twiliomigrae.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002041706301_GeoDirections.cs" />
-    <Compile Include="Migrations\202002041706301_GeoDirections.designer.cs">
-      <DependentUpon>202002041706301_GeoDirections.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002041810179_directionmigration.cs" />
-    <Compile Include="Migrations\202002041810179_directionmigration.designer.cs">
-      <DependentUpon>202002041810179_directionmigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002042048390_geoLocate.cs" />
-    <Compile Include="Migrations\202002042048390_geoLocate.designer.cs">
-      <DependentUpon>202002042048390_geoLocate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002042051400_newmig.cs" />
-    <Compile Include="Migrations\202002042051400_newmig.designer.cs">
-      <DependentUpon>202002042051400_newmig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002042053357_GeoMapURL.cs" />
-    <Compile Include="Migrations\202002042053357_GeoMapURL.designer.cs">
-      <DependentUpon>202002042053357_GeoMapURL.cs</DependentUpon>
+    <Compile Include="Migrations\202002071950092_AddCounter.cs" />
+    <Compile Include="Migrations\202002071950092_AddCounter.designer.cs">
+      <DependentUpon>202002071950092_AddCounter.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\KeyPrivate.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\GeoCode.cs" />
     <Compile Include="Models\GeoDirection.cs" />
-    <Compile Include="Models\GeoLocation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\SecretKeys.cs" />
     <Compile Include="Models\TeammemberTeam.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\TeamMember.cs" />
@@ -266,16 +236,38 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -287,6 +279,77 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -349,62 +412,53 @@
     <Content Include="Views\Meetings\Edit.cshtml" />
     <Content Include="Views\Meetings\Index.cshtml" />
     <Content Include="Views\Meetings\SeeRoute.cshtml" />
-    <Content Include="Views\Organizations\TeamsList.cshtml" />
     <Content Include="Views\Meetings\Directions.cshtml" />
+    <Content Include="Views\Teams\TeamsList.cshtml" />
+    <Content Include="Views\SMS\SendInviteSms.cshtml" />
+    <Content Include="Views\Requests\Index.cshtml" />
+    <Content Include="Views\Requests\Details.cshtml" />
+    <Content Include="Views\Requests\Create.cshtml" />
+    <Content Include="Views\Requests\Edit.cshtml" />
+    <Content Include="Views\Requests\Delete.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Organizations\IndividualTeams.cshtml" />
+    <Content Include="Views\Teams\AddToJunction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SMS\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002012354001_createDatabase.resx">
-      <DependentUpon>202002012354001_createDatabase.cs</DependentUpon>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202002071754359_newmig.resx">
+      <DependentUpon>202002071754359_newmig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002031614398_newmigraton.resx">
-      <DependentUpon>202002031614398_newmigraton.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002071759475_nemigrate.resx">
+      <DependentUpon>202002071759475_nemigrate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002031644246_newnewnewmigration.resx">
-      <DependentUpon>202002031644246_newnewnewmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002071807116_MessageMig.resx">
+      <DependentUpon>202002071807116_MessageMig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002031658363_UpdateMigrate.resx">
-      <DependentUpon>202002031658363_UpdateMigrate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002031953129_APIcallMigration.resx">
-      <DependentUpon>202002031953129_APIcallMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002032010307_addName.resx">
-      <DependentUpon>202002032010307_addName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002041603273_twiliomigrae.resx">
-      <DependentUpon>202002041603273_twiliomigrae.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002041706301_GeoDirections.resx">
-      <DependentUpon>202002041706301_GeoDirections.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002041810179_directionmigration.resx">
-      <DependentUpon>202002041810179_directionmigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002042048390_geoLocate.resx">
-      <DependentUpon>202002042048390_geoLocate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002042051400_newmig.resx">
-      <DependentUpon>202002042051400_newmig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002042053357_GeoMapURL.resx">
-      <DependentUpon>202002042053357_GeoMapURL.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002071950092_AddCounter.resx">
+      <DependentUpon>202002071950092_AddCounter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -412,6 +466,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

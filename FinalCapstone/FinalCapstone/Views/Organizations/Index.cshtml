@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Browse Organizations</h2>
 <table class="table">
     <tr>
         <th>
@@ -37,11 +37,16 @@
             @Html.DisplayFor(modelItem => item.Bio)
         </td>
         <td>
-            @Html.ActionLink("Teams", "TeamsList", new { id = item.OrganizationId }) |
-            @Html.ActionLink("Create Teams", "Create", "Teams") |
-            @Html.ActionLink("Edit", "Edit", new { id = item.OrganizationId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.OrganizationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.OrganizationId })
+            @*change connection to teamslist*@
+            @*Create JoinTeam method, close to add to junction table??*@
+            <div>
+                @Html.ActionLink("Join a Team", "TeamsList", "Teams", new { id = item.OrganizationId }, null) |
+
+                @Html.ActionLink("Details", "Details", new { id = item.OrganizationId })
+
+                @*@Html.ActionLink("Teams", "TeamsList", "Teams", new { id = item.OrganizationId }, null)*@
+            </div>
+            
         </td>
     </tr>
 }

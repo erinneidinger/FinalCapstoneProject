@@ -19,7 +19,9 @@ namespace FinalCapstone.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public string APICall = KeyPrivate.GeoMapURL;
+        public int Counter { get; set; }
+
+        public string APITeamCall = SecretKeys.MapURL;
 
         [ForeignKey ("Organization")]
         public int OrganizationId { get; set; }

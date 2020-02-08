@@ -23,8 +23,9 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Organizations/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string teams)
         {
+            ViewBag.Team = teams;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -66,11 +67,19 @@ namespace FinalCapstone.Controllers
             
         }
 
-        public ActionResult TeamsList(int id)
+        public ActionResult IndividualTeams()
         {
-            var foundTeams = db.Teams.Where(a => a.OrganizationId == id).ToList();
-            var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
-            ViewBag.OrganizationName = foundOrganization.Name;
+            var userId = User.Identity.GetUserId();
+            var foundMember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            var member = db.TeammemberTeam.Where(a => a.TeammemberId == foundMember.TeammemberId).FirstOrDefault();
+            if(member == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var foundTeams = db.Teams.Where(a => a.TeamId == member.TeamId).ToList();
+     
+            //var foundOrganization = db.Organizations.Find(foundTeams.OrganizationId);
+            //ViewBag.OrganizationName = foundOrganization.Name;
             return View(foundTeams);
         }
 
@@ -94,7 +103,7 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrganizationId")] Organization organization)
+        public ActionResult Edit(Organization organization)
         {
             if (ModelState.IsValid)
             {

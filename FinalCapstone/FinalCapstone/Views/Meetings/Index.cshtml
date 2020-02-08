@@ -7,15 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("See All Event Locations", "SeeRoute", new { id = ViewBag.TeamId })
+    @Html.ActionLink("See All Event Locations", "SeeRoute", new { id = ViewBag.TeamId }) | @Html.ActionLink("Directions", "Directions", new { id = ViewBag.TeamId })
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.team.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Time)
@@ -39,9 +36,6 @@
         @Html.DisplayFor(modelItem => item.Name)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.team.Name)
-    </td>
-    <td>
         @Html.DisplayFor(modelItem => item.Time)
     </td>
     <td>
@@ -57,7 +51,6 @@
     </td>
 
     <td>
-        @Html.ActionLink("Directions","Directions", new { id = item.MeetingId }) |
         @Html.ActionLink("Edit", "Edit", new { id = item.MeetingId }) |
         @Html.ActionLink("Details", "Details", new { id = item.MeetingId }) |
         @Html.ActionLink("Delete", "Delete", new { id = item.MeetingId })

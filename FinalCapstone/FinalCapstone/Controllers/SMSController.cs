@@ -12,20 +12,22 @@ using Twilio.Types;
 using Twilio.TwiML;
 using Twilio.AspNet.Mvc;
 using FinalCapstone.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FinalCapstone.Controllers
 {
     public class SMSController : TwilioController
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: SMS
         public ActionResult SendSms()
         {
-            var accountSid = KeyPrivate.TwilioAccountSid;
-            var authToken = KeyPrivate.TwilioAuthToken;
+            var accountSid = SecretKeys.TwilioAccountSid;
+            var authToken = SecretKeys.TwilioAuthToken;
             TwilioClient.Init(accountSid, authToken);
 
-            var to = new PhoneNumber(KeyPrivate.MyPhoneNumber);
-            var from = new PhoneNumber(KeyPrivate.TwilioNumber);
+            var to = new PhoneNumber(SecretKeys.MyPhoneNumber);
+            var from = new PhoneNumber(SecretKeys.TwilioNumber);
 
             var message = MessageResource.Create(
                 to: to,
@@ -34,12 +36,21 @@ namespace FinalCapstone.Controllers
             return Content(message.Sid);
         }
 
-        //public ActionResult ReceiveSms()
-        //{
-        //    var response = new MessagingResponse();
-        //    response.Message("This phone will combust in 10 seconds");
+        public ActionResult SendInviteSms()
+        {
+            var userId = User.Identity.GetUserId();
+            var accountSid = SecretKeys.TwilioAccountSid;
+            var authToken = SecretKeys.TwilioAuthToken;
+            TwilioClient.Init(accountSid, authToken);
 
-        //    return TwilML(response);
-        //}
+            var to = new PhoneNumber(SecretKeys.MyPhoneNumber);
+            var from = new PhoneNumber(SecretKeys.TwilioNumber);
+            var member = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            var message = MessageResource.Create(
+                to: to,
+                from: from,
+                body: "Hello! " + member.FirstName + " has invited you to join their organization on SafetyNet! Please follow the link in order to register for your new account: https://localhost:44373/Account/Register");
+            return Content(message.Sid);
+        }
     }
 }

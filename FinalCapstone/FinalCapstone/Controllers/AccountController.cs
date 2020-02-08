@@ -58,6 +58,7 @@ namespace FinalCapstone.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            var userId = User.Identity.GetUserId();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -71,6 +72,8 @@ namespace FinalCapstone.Controllers
         {
             if (!ModelState.IsValid)
             {
+                //var userId = User.Identity.GetUserId();
+                //ViewBag.ApplicationId = userId;
                 return View(model);
             }
 
@@ -80,6 +83,8 @@ namespace FinalCapstone.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //var userId = User.Identity.GetUserId();
+                    //ViewBag.ApplicationId = userId;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

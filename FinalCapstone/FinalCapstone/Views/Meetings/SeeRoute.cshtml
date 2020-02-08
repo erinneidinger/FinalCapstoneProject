@@ -2,43 +2,48 @@
 
 @{
     ViewBag.Title = "SeeRoute";
+    ViewBag.Organization = "Organizations";
+}
+@{ 
+    //var locations = ViewBag.Meeting;
 }
 
-<h2>See Route</h2>
-<html>
 <head>
     <style>
         #map {
             height: 400px;
             width: 100%;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
 <body>
     <h2>Find my Events:</h2>
     <div id="map"></div>
-    <script>
-        function initMap() {
-            
-            var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: 43.0389, lng: -87.9065 }});
-
-            $(Model).each(function (i, val) {
-                var venLocation = new { lat: val.Latitude, lng: val.Longitude };
-                var marker = new google.maps.Marker({ position: venLocation, map: map });
-            })
-          
-        //var infoWindow = new google.maps.InfoWindow({
-        //content: (".details")
-        //marker.addListener('click', function () {
-        //    infoWindow.open(map, marker);
-        //    });
-        //}
-            }
-  
-    </script>
-    <script src="@ViewBag.APICall" async defer></script>
 </body>
-</html>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <script>
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), { zoom: 5, center: { lat: 43.0389, lng: -87.9065 } });
+
+            @foreach(var item in Model) {
+                <text>
+                myLatLng = new google.maps.LatLng(@item.Latitude, @item.Longitude);
+                marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map
+                });
+                </text>
+            }
+
+        }
+
+        </script>
+        <script src="@ViewBag.APICall" async defer></script>
+        
+        <p>
+            @Html.ActionLink("Meetings", "Index", "Meetings", new { id = Model.FirstOrDefault().TeamId }, null) |
+            @Html.ActionLink("Back to List", "TeamsList", "Teams", new { id = ViewBag.OrganizationId }, null)
+        </p>
+

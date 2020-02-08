@@ -20,6 +20,8 @@ namespace FinalCapstone.Controllers
         // GET: Teams
         public ActionResult Index()
         {
+            Team team = new Team();
+            ViewBag.TeamId = team.TeamId;
             return View(db.Teams.ToList());
         }
 
@@ -50,34 +52,74 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Team team)
+        public ActionResult Create(Team team, int id)
         {
             try
-            {
-                var userId = User.Identity.GetUserId();
-                var newOrganization = db.Organizations.Where(a => a.ApplicationId == userId).FirstOrDefault();
-                var foundOrganization = db.Organizations.Where(a => a.OrganizationId == newOrganization.OrganizationId).FirstOrDefault();
+            { 
+                var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
                 team.OrganizationId = foundOrganization.OrganizationId;
                 db.Teams.Add(team);
                 db.SaveChanges();
-                return RedirectToAction("AddToJunction");
+                return View("TeamsList");
+                //return RedirectToAction("AddToJunction");
             }
             catch
             {
                 return View();
             }
         }
-        public ActionResult AddToJunction(TeammemberTeam teammemberteam)
+
+        //Needed?
+        //public ActionResult JoinTeam(string id)
+        //{
+        //    var foundTeammember = db.Teammembers.Where(a => a.ApplicationId == id).FirstOrDefault();
+            
+        //}
+
+
+
+        //trying to fix this hot mess............
+        public ActionResult AddToJunction(int Id)
         {
+            TeammemberTeam teammemberteam = new TeammemberTeam();
             var userId = User.Identity.GetUserId();
             var newTeammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
-            var foundOrganzation = db.Organizations.Where(a => a.ApplicationId == newTeammember.ApplicationId).FirstOrDefault();
-            var foundTeam = db.Teams.Where(a => a.OrganizationId == foundOrganzation.OrganizationId).FirstOrDefault();
-            teammemberteam.TeamId = foundTeam.TeamId;
-            teammemberteam.TeammemberId = newTeammember.TeammemberId;
+            var foundOrganization = db.Organizations.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            var teammemberId = newTeammember.TeammemberId;
+            var organizations = db.Organizations.Where(a => a.OrganizationId == foundOrganization.OrganizationId).FirstOrDefault();
+            teammemberteam.TeamId = Id;
+            teammemberteam.TeammemberId = teammemberId;
+            var sameTeammemberteam = db.TeammemberTeam.Where(a => a.TeamId == teammemberteam.TeamId && a.TeammemberId == teammemberteam.TeammemberId).FirstOrDefault();
+            if(sameTeammemberteam.TeamId == teammemberteam.TeamId)
+            {
+                if(sameTeammemberteam.TeammemberId == teammemberteam.TeammemberId)
+                {
+                    return View("Create");
+                }
+            }
             db.TeammemberTeam.Add(teammemberteam);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("TeamsList");
+        }
+
+        //Duplicate on OrganizationsController?
+        public ActionResult TeamsList()
+        {
+            var userId = User.Identity.GetUserId();
+            var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
+            var foundOrganization = db.Organizations.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
+            var organization = db.Organizations.Find(foundOrganization.OrganizationId);
+            ViewBag.OrganizationName = organization.Name;
+            ViewBag.OrganizationId = foundOrganization.OrganizationId;
+            var found = db.TeammemberTeam.Where(a=>a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
+            ViewBag.Junction = found;
+            if (found == null)
+            {
+                AddToJunction(int id);
+            }
+            ViewBag.TeamMemberId = teamMember.TeammemberId;
+            return View(foundTeams);
         }
 
         // GET: Teams/Edit/5
@@ -100,7 +142,7 @@ namespace FinalCapstone.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamId")] Team team)
+        public ActionResult Edit(Team team, int Id)
         {
             if (ModelState.IsValid)
             {
@@ -129,7 +171,7 @@ namespace FinalCapstone.Controllers
         // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Team team = db.Teams.Find(id);
             db.Teams.Remove(team);

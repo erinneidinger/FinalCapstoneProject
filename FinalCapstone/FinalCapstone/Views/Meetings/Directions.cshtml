@@ -1,111 +1,148 @@
-﻿@model FinalCapstone.Models.Meeting
+﻿@model IEnumerable<FinalCapstone.Models.Meeting>
 
 @{
     ViewBag.Title = "Directions";
 }
 
 <h2>Directions</h2>
-<div>
-    <html>
-    <head>
-        <style>
-            #map {
-                height: 400px;
-                width: 100%;
-            }
-        </style>
+<html>
+<br /><br /><br />
+<head>
+<style>
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#floating-panel {
+  position: inherit;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+#right-panel {
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#right-panel select, #right-panel input {
+  font-size: 15px;
+}
+
+#right-panel select {
+  width: 100%;
+}
+
+#right-panel i {
+  font-size: 12px;
+}
+#right-panel {
+  height: 100%;
+  float: right;
+  width: 390px;
+  overflow: auto;
+}
+#map {
+  margin-right: 400px;
+}
+#floating-panel {
+  background: #fff;
+  padding: 5px;
+  font-size: 14px;
+  font-family: Arial;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+  display: none;
+}
+  #map {
+    height: 500px;
+    margin: 0;
+  }
+  #right-panel {
+    float: none;
+    width: auto;
+  }
+
+</style>
     </head>
     <body>
-        <h2>Find my Events:</h2>
+
+        <h2>Directions:</h2>
+      
+        <div id="floating-panel">
+            <strong>Start:</strong>
+            <select id="start">
+            @foreach (var item in @ViewBag.Meeting)
+            {
+            <option value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
+            }
+        </select>
+        <br>
+                <strong>End:</strong>
+                <select id="end">
+                    @foreach (var item in @ViewBag.Meeting)
+                    {
+                        <option value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
+                    }
+                </select>
+        </div>
+        <div id="right-panel"></div>
         <div id="map"></div>
-        <script>
-         
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), { zoom: 12, center: lat: @Model.Latitude, lng: @Model.Longitude });
+        <script async defer src = "@ViewBag.APICall"></script>
+<script>
+  function initMap() {
+  var directionsRenderer = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
+  var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: start
+  });
+  directionsRenderer.setMap(map);
+  directionsRenderer.setPanel(document.getElementById('right-panel'));
 
-            var autocomplete = new google.maps.places.Autocomplete(Dom_NODE);
-            autocomplete.bindTo('bounds', map);
-            autocomplete.addListener('place_changed', () => {
-                var place = autocomplete.getPlace();
-            });
+  var control = document.getElementById('floating-panel');
+  control.style.display = 'block';
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
+  var onChangeHandler = function() {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  };
+  document.getElementById('start').addEventListener('change', onChangeHandler);
+  document.getElementById('end').addEventListener('change', onChangeHandler);
+}
 
-            var renderDirections = (origin, destination) => {
-                var directionsService = new google.maps.DirectionService(),
-                    directionsDisplay = new google.maps.DirectionsRenderer(),
-                    request = {
-                        origin: origin,
-                        destination: destination,
-                        travelMode: 'DRIVING'
-                    }
-                directionsDisplay.setMap(map);
-                directionsService.route(request, (result, status) => {
-                    if (status == 'OK') {
-                        directionsDisplay.setDirections(result);
-                    }
-                }
-            };
-            var marker = new google.maps.Marker({ position: start, map: map });
-            
-
-    //var infoWindow = new google.maps.InfoWindow({
-    //    content: (".details")
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  },
+function (response, status) {
+    if (status === 'OK') {
+      directionsRenderer.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
     }
-
-    //marker.addListener('click', function () {
-    //    infoWindow.open(map, marker);
-    //    });
-    //}
-
+  });
+}
         </script>
-        <script src=@Model.APIDirections async defer></script>
     </body>
     </html>
 
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StreetAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StreetAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.State)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.State)
-        </dd>
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MeetingId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { id = Model.FirstOrDefault().TeamId }, null)
 </p>
