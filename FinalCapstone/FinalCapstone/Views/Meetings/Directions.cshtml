@@ -82,18 +82,18 @@ html, body {
       
         <div id="floating-panel">
             <strong>Start:</strong>
-            <select id="start">
+            <select class="btn btn-default" id="start">
             @foreach (var item in @ViewBag.Meeting)
             {
-            <option value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
+            <option class="btn btn-default" value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
             }
         </select>
         <br>
                 <strong>End:</strong>
-                <select id="end">
+                <select class="btn btn-default" id="end">
                     @foreach (var item in @ViewBag.Meeting)
                     {
-                        <option value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
+                        <option class="btn btn-default" value="@item.StreetAddress, @item.City, @item.State">@item.Name</option>
                     }
                 </select>
         </div>
@@ -143,6 +143,6 @@ function (response, status) {
     </html>
 
     <hr />
-<p>
+<p class="btn btn-default">
     @Html.ActionLink("Back to List", "Index", new { id = Model.FirstOrDefault().TeamId }, null)
 </p>

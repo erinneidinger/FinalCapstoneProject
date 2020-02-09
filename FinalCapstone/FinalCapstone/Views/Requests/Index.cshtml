@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Index";
 }
+    <div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
+        <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+">Requests</p>
+    </div>
 
-<h2>Index</h2>
-
-<p>
+<p class="btn btn-default">
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -47,10 +49,16 @@
             @Html.DisplayFor(modelItem => item.DatePosted)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MessageId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MessageId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MessageId })
-        </td>
+            <div class="btn btn-default">
+                @Html.ActionLink("Edit", "Edit", new { id = item.MessageId })
+            </div>
+            <div class="btn btn-default">
+                    @Html.ActionLink("Details", "Details", new { id = item.MessageId })
+            </div>
+            <div class="btn btn-default">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MessageId })
+            </div>
+</td>
     </tr>
 }
 

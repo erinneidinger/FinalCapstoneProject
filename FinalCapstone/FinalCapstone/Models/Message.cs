@@ -12,11 +12,14 @@ namespace FinalCapstone.Models
         [Key]
         public int MessageId {get; set;}
         public string Subject { get; set; }
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Display(Name = "Message")]
         public string MessageToPost { get; set; }
+        [Display(Name = "Date Posted")]
         public string DatePosted { get; set; }
 
        

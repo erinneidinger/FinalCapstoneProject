@@ -23,10 +23,9 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Organizations/Details/5
-        public ActionResult Details(int id, string teams)
+        public ActionResult Details(int id)
         {
-            ViewBag.Team = teams;
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -64,7 +63,6 @@ namespace FinalCapstone.Controllers
             {
                 return View(organization);
             }
-            
         }
 
         public ActionResult IndividualTeams()

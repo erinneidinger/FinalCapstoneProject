@@ -3,8 +3,14 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
+    <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+">Browse Organizations</p>
+</div>
 
-<h2>Browse Organizations</h2>
+<p class="btn btn-default">
+    @Html.ActionLink("Create Organization", "Create", "Organizations")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -22,33 +28,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bio)
-        </td>
-        <td>
-            @*change connection to teamslist*@
-            @*Create JoinTeam method, close to add to junction table??*@
-            <div>
-                @Html.ActionLink("Join a Team", "TeamsList", "Teams", new { id = item.OrganizationId }, null) |
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bio)
+            </td>
+            <td>
+                <div class="btn btn-default">
+                    @Html.ActionLink("Join a Team", "TeamsList", "Teams", new { id = item.OrganizationId }, null)
+                </div>
 
-                @Html.ActionLink("Details", "Details", new { id = item.OrganizationId })
+                <div class="btn btn-default">
+                    @Html.ActionLink("Details", "Details", new { id = item.OrganizationId })
 
-                @*@Html.ActionLink("Teams", "TeamsList", "Teams", new { id = item.OrganizationId }, null)*@
-            </div>
-            
-        </td>
-    </tr>
-}
+                    @*@Html.ActionLink("Teams", "TeamsList", "Teams", new { id = item.OrganizationId }, null)*@
+                </div>
+
+            </td>
+        </tr>
+    }
 
 </table>

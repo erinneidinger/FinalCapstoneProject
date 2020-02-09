@@ -14,6 +14,7 @@ namespace FinalCapstone.Models
         public int MeetingId { get; set; }
         public string Name { get; set; }
         public string Time { get; set; }
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }

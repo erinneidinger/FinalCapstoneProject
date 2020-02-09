@@ -19,7 +19,10 @@
     </style>
 </head>
 <body>
-    <h2>Find my Events:</h2>
+    <div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
+        <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+">Find my Events:</p>
+    </div>
     <div id="map"></div>
 </body>
         <script>
@@ -41,9 +44,9 @@
 
         </script>
         <script src="@ViewBag.APICall" async defer></script>
-        
-        <p>
-            @Html.ActionLink("Meetings", "Index", "Meetings", new { id = Model.FirstOrDefault().TeamId }, null) |
-            @Html.ActionLink("Back to List", "TeamsList", "Teams", new { id = ViewBag.OrganizationId }, null)
-        </p>
+        <br />
+        <div class="btn btn-default">
+            @Html.ActionLink("Meetings", "Index", "Meetings", new { id = Model.FirstOrDefault().TeamId }, null)
+        </div>
+          
 

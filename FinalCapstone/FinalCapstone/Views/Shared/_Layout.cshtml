@@ -26,7 +26,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("My Teams", "IndividualTeams", "Organizations")</li>
                     <li>@Html.ActionLink("Browse Organizations", "Index", "Organizations"@*, new { id = @ViewBag.ApplicationId }, null*@)</li>
-                    <li>@Html.ActionLink("My Profile", "Index", "Teammembers"@*, new { id = @ViewBag.ApplicationId }, null*@)</li>
+                    <li>@Html.ActionLink("My Profile", "Index", "Teammembers", new { id = @ViewBag.ApplicationId }, null)</li>
                 </ul>
                 }
                 @Html.Partial("_LoginPartial")

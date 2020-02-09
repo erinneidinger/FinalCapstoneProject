@@ -6,6 +6,7 @@
 
 <h2>AddToJunction</h2>
 
+<h3>Do you want to be a part of this team?</h3>
 <div>
     <h4>Team</h4>
     <hr />
@@ -18,17 +19,15 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OrganizationId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrganizationId)
-        </dd>
-
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Add" class="btn btn-default" /> |
+
+    @Html.ActionLink("Join a Team", "TeamsList", "Teams", new { id = Model.TeamId }, null)
 </div>
-<p>
-    @Html.ActionLink("Join the Team", "TeamsList", new { id = Model.OrganizationId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    }
+</div>

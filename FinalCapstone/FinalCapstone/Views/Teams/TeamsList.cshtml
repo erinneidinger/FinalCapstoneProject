@@ -4,58 +4,66 @@
     ViewBag.Title = "TeamsList";
 }
 
-<h2>@ViewBag.OrganizationName Organization</h2>
+    <div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
+        <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+">@ViewBag.OrganizationName Organization</p>
+    </div>
+        @if (@ViewBag.Junction != null)
+        {
+            <p class="btn btn-default">@Html.ActionLink("Create New Teams", "Create", "Teams", new { id = @ViewBag.OrganizationId }, null)</p> <p class="btn btn-default">@Html.ActionLink("Create Request", "Create", "Requests")</p> <p class="btn btn-default">@Html.ActionLink("Send Emergency Text!", "SendSms", "SMS")</p>
+        }
 
-@if (@ViewBag.Junction != null)
-{
-    <p>@Html.ActionLink("Create New Teams", "Create", "Teams", new { id = @ViewBag.OrganizationId }, null) | @Html.ActionLink("Create Request", "Create", "Requests") | @Html.ActionLink("Send Emergency Text!", "SendSms", "SMS")</p>
-}
-
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            @if (@ViewBag.Junction != null)
-            {
+        <table class="table">
+            <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Counter)
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
-            }
+                @if (@ViewBag.Junction != null)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Counter)
+                    </th>
+                }
                 <th></th>
             </tr>
 
-        @foreach (var item in Model)
-        {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        @if (@ViewBag.Junction != null)
-        {
-            <td>
-                @Html.DisplayFor(modelItem => item.Counter)
-            </td>
-        }
-            <td>
-                @if (@ViewBag.Junction != null)
-                {
-                    <div>
-                        @Html.ActionLink("Team Route", "SeeRoute", "Meetings", new { id = item.TeamId }, null) |
-                        @Html.ActionLink("See Requests", "Index", "Requests", new { id = item.TeamId }, null) |
-                        @Html.ActionLink("Create Events", "Create", "Meetings", new { id = item.TeamId }, null) |
-                        @Html.ActionLink("Details", "Details", "Teams", new { id = item.TeamId }, null)
-                    </div>
-                }
-                @if (@ViewBag.Junction == null)
-                {
-                    <div>
-                        @Html.ActionLink("Join", "AddToJunction", "Teams", new { id = item.TeamId }, null)
-                    </div>
-                }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    @if (@ViewBag.Junction != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Counter)
+                        </td>
+                    }
+                    <td>
+                        @if (@ViewBag.Junction != null)
+                        {
+                            <div class="btn btn-default">
+                                @Html.ActionLink("Team Route", "SeeRoute", "Meetings", new { id = item.TeamId }, null)
+                            </div>
+                            <div class="btn btn-default">
+                                @Html.ActionLink("See Requests", "Index", "Requests", new { id = item.TeamId }, null)
+                            </div>
+                            <div class="btn btn-default">
+                                @Html.ActionLink("Create Events", "Create", "Meetings", new { id = item.TeamId }, null)
+                            </div>
+                            <div class="btn btn-default">
+                                @Html.ActionLink("Details", "Details", "Teams", new { id = item.TeamId }, null)
+                            </div>
+                        }
+                        @if (@ViewBag.Junction == null)
+                        {
+                            <div class="btn btn-default">
+                                @Html.ActionLink("Join", "AddToJunction", "Teams", new { id = item.TeamId }, null)
+                            </div>
+                        }
 
-            </td>
-        </tr>
-        }
+                    </td>
+                </tr>
+            }
 
-    </table>
+        </table>

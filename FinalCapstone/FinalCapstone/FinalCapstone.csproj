@@ -203,22 +203,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002071754359_newmig.cs" />
-    <Compile Include="Migrations\202002071754359_newmig.designer.cs">
-      <DependentUpon>202002071754359_newmig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002071759475_nemigrate.cs" />
-    <Compile Include="Migrations\202002071759475_nemigrate.designer.cs">
-      <DependentUpon>202002071759475_nemigrate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002071807116_MessageMig.cs" />
-    <Compile Include="Migrations\202002071807116_MessageMig.designer.cs">
-      <DependentUpon>202002071807116_MessageMig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202002071950092_AddCounter.cs" />
-    <Compile Include="Migrations\202002071950092_AddCounter.designer.cs">
-      <DependentUpon>202002071950092_AddCounter.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Meeting.cs" />
@@ -350,6 +334,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="streetlifeboots2.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -446,20 +431,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002071754359_newmig.resx">
-      <DependentUpon>202002071754359_newmig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002071759475_nemigrate.resx">
-      <DependentUpon>202002071759475_nemigrate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002071807116_MessageMig.resx">
-      <DependentUpon>202002071807116_MessageMig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002071950092_AddCounter.resx">
-      <DependentUpon>202002071950092_AddCounter.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
