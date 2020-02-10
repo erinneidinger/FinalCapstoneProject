@@ -28,7 +28,7 @@ namespace FinalCapstone.Controllers
         // GET: Teams/Details/5
         public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -73,12 +73,31 @@ namespace FinalCapstone.Controllers
         //public ActionResult JoinTeam(string id)
         //{
         //    var foundTeammember = db.Teammembers.Where(a => a.ApplicationId == id).FirstOrDefault();
-            
+
         //}
 
 
 
         //trying to fix this hot mess..
+        //public ActionResult PreTeamsList(int id)
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
+        //    var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
+        //    var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
+        //    ViewBag.foundTeams = foundTeams;
+        //    ViewBag.OrganizationName = foundOrganization.Name;
+        //    ViewBag.OrganizationId = foundOrganization.OrganizationId;
+        //    var found = db.TeammemberTeam.Where(a => a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
+        //    ViewBag.Junction = found;
+        //    if (found == null)
+        //    {
+        //        return View(foundTeams);
+        //    }
+        //    ViewBag.TeamMemberId = teamMember.TeammemberId;
+        //    return View("TeamsList");
+        //}
+
         public ActionResult AddToJunction(int Id)
         {
             TeammemberTeam teammemberteam = new TeammemberTeam();
@@ -86,6 +105,8 @@ namespace FinalCapstone.Controllers
             var newTeammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
             var teammemberId = newTeammember.TeammemberId;
             teammemberteam.TeamId = Id;
+            var team = db.Teams.Where(a => a.TeamId == teammemberteam.TeamId).FirstOrDefault();
+            ViewBag.Team = team.Name;
             teammemberteam.TeammemberId = teammemberId;
             var sameTeammemberteam = db.TeammemberTeam.Where(a => a.TeamId == teammemberteam.TeamId).Where(a=>a.TeammemberId == teammemberteam.TeammemberId).FirstOrDefault();
             if (sameTeammemberteam == null)
@@ -94,7 +115,7 @@ namespace FinalCapstone.Controllers
                 db.SaveChanges();
             }
             //ViewBag.sameTeammemberteam = sameTeammemberteam;
-            return RedirectToAction("TeamsList");
+            return View(teammemberteam);
         }
 
         //Duplicate on OrganizationsController?
@@ -119,7 +140,7 @@ namespace FinalCapstone.Controllers
         // GET: Teams/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -148,9 +169,9 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Teams/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

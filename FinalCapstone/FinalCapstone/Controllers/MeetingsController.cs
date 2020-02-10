@@ -49,7 +49,7 @@ namespace FinalCapstone.Controllers
 
         public ActionResult Directions(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -66,7 +66,6 @@ namespace FinalCapstone.Controllers
 
         public ActionResult SeeRoute(int? id, Meeting meeting)
         {
-
             var meetings = db.Meetings.Where(a => a.TeamId == id).ToList();
             ViewBag.APICall = meeting.APICall;
             ViewBag.Meeting = meetings;
@@ -151,7 +150,7 @@ namespace FinalCapstone.Controllers
         // GET: Meetings/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

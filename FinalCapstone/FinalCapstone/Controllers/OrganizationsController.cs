@@ -30,6 +30,9 @@ namespace FinalCapstone.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organization organization = db.Organizations.Find(id);
+            ViewBag.ApiCall = organization.APICall;
+            var userId = User.Identity.GetUserId();
+            ViewBag.ApplicationId = userId;
             if (organization == null)
             {
                 return HttpNotFound();
@@ -70,15 +73,23 @@ namespace FinalCapstone.Controllers
             var userId = User.Identity.GetUserId();
             var foundMember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
             var member = db.TeammemberTeam.Where(a => a.TeammemberId == foundMember.TeammemberId).FirstOrDefault();
-            if(member == null)
+            if (member == null)
             {
                 return RedirectToAction("Index");
             }
-            var foundTeams = db.Teams.Where(a => a.TeamId == member.TeamId).ToList();
-     
+            var foundTeams = db.TeammemberTeam.Where(a=>a.TeamId == member.TeamId).ToList();
+            foreach(TeammemberTeam team in foundTeams)
+            {
+                var newTeamNames = db.Teams.Where(a => a.TeamId == team.TeamId).ToList();
+                foreach(Team theTeam in newTeamNames)
+                {
+                    var theTeams = db.Teams.Where(a => a.Name == theTeam.Name).ToList();
+                    return View(theTeams);
+                }
+            }
             //var foundOrganization = db.Organizations.Find(foundTeams.OrganizationId);
             //ViewBag.OrganizationName = foundOrganization.Name;
-            return View(foundTeams);
+            return View("Index");
         }
 
         // GET: Organizations/Edit/5
@@ -113,7 +124,7 @@ namespace FinalCapstone.Controllers
         }
 
         // GET: Organizations/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {

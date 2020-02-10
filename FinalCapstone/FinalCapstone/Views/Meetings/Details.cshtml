@@ -13,9 +13,12 @@
     </style>
 </head>
 <body>
-    <h2>Find my Events:</h2>
-    <div id="map"></div>
-    <script>
+    <div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
+        <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+">Find This Event:</p>
+</div>
+<div id="map"></div>
+<script>
         function initMap() {
             var venLocation = { lat: @Model.Latitude, lng: @Model.Longitude };
 
@@ -32,8 +35,8 @@
         });
     }
 
-    </script>
-    <script src="@Model.APICall" async defer></script>
+</script>
+<script src="@Model.APICall" async defer></script>
 </body>
 </html>
 <div>

@@ -16,6 +16,8 @@ namespace FinalCapstone.Models
         public string State { get; set; }
         public string Bio { get; set; }
 
+        public string APICall = SecretKeys.MapURL;
+
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

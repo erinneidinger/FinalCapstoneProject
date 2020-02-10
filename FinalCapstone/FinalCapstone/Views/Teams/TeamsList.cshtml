@@ -5,7 +5,7 @@
 }
 
     <div class="jumbotron" style="background-image: url(../../streetlifeboots2.jpg); object-fit: fill; background-size: cover; background-position:center; height: 200px">
-        <p class="lead" style="font-size: 75px; text-shadow: -4px 4px 5px #000000;
+        <p class="lead" style="font-size: 60px; text-shadow: -4px 4px 5px #000000;
 ">@ViewBag.OrganizationName Organization</p>
     </div>
         @if (@ViewBag.Junction != null)
@@ -20,9 +20,9 @@
                 </th>
                 @if (@ViewBag.Junction != null)
                 {
-                    <th>
+                    @*<th>
                         @Html.DisplayNameFor(model => model.Counter)
-                    </th>
+                    </th>*@
                 }
                 <th></th>
             </tr>
@@ -33,12 +33,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    @if (@ViewBag.Junction != null)
+                    @*@if (@ViewBag.Junction != null)
                     {
                         <td>
                             @Html.DisplayFor(modelItem => item.Counter)
                         </td>
-                    }
+                    }*@
                     <td>
                         @if (@ViewBag.Junction != null)
                         {
