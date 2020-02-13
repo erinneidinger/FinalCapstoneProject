@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FinalCapstone.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +10,12 @@ namespace FinalCapstone.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
+            var teammember = db.Teammembers.Where(c => c.ApplicationId == userId).FirstOrDefault();
+            ViewBag.TeammemberId = teammember.TeammemberId;
             return View();
         }
 

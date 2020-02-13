@@ -27,7 +27,7 @@
         @Html.AntiForgeryToken()
 
     <div class="btn btn-default">
-        @Html.ActionLink("Join a Team", "TeamsList", "Teams", new { id = Model.TeamId }, null)
+        @Html.ActionLink("Yes", "IndividualTeams", "Teams", new { id = Model.TeammemberId }, null)
     </div>
 
     }

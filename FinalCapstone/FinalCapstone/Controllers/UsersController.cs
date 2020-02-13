@@ -20,6 +20,9 @@ namespace FinalCapstone.Controllers
             {
                 var user = User.Identity;
                 ViewBag.Name = user.Name;
+                var userId = User.Identity.GetUserId();
+                var teammember = context.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+                ViewBag.TeammemberId = teammember.TeammemberId;
 
                 ViewBag.displayMenu = "No";
 

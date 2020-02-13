@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalCapstone.Models.TeamMember>
+﻿@model FinalCapstone.Models.TeamMember
 
 @{
     ViewBag.Title = "Index";
@@ -32,33 +32,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            @Html.DisplayFor(modelItem => Model.FirstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => Model.LastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StreetAddress)
+            @Html.DisplayFor(modelItem => Model.StreetAddress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City)
+            @Html.DisplayFor(modelItem => Model.City)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.State)
+            @Html.DisplayFor(modelItem => Model.State)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelItem => Model.Email)
         </td>
         
         <td>
             <div class="btn btn-default">
-                @Html.ActionLink("Details", "Details", new { id = item.TeammemberId })
+                @Html.ActionLink("Details", "Details", new { id = Model.TeammemberId })
             </div>
         </td>
     </tr>
-}
 
 </table>

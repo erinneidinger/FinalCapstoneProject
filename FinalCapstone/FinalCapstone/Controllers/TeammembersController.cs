@@ -22,7 +22,8 @@ namespace FinalCapstone.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var teammember = db.Teammembers.Where(c => c.ApplicationId == userId).ToList();
+            var teammember = db.Teammembers.Where(c => c.ApplicationId == userId).FirstOrDefault();
+            ViewBag.TeammemberId = teammember.TeammemberId;
             return View(teammember);
         }
 
@@ -79,6 +80,7 @@ namespace FinalCapstone.Controllers
                 teammember.Email = foundMember.Email;
                 db.Teammembers.Add(teammember);
                 db.SaveChanges();
+                ViewBag.TeammemberId = teammember.TeammemberId;
                 return RedirectToAction("Index");
             }
             catch

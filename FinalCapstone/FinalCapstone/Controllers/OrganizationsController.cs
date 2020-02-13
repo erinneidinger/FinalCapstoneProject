@@ -19,6 +19,9 @@ namespace FinalCapstone.Controllers
         // GET: Organizations
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
+            var teammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            ViewBag.TeammemberId = teammember.TeammemberId;
             return View(db.Organizations.ToList());
         }
 
@@ -33,6 +36,8 @@ namespace FinalCapstone.Controllers
             ViewBag.ApiCall = organization.APICall;
             var userId = User.Identity.GetUserId();
             ViewBag.ApplicationId = userId;
+            var teammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+            ViewBag.TeammemberId = teammember.TeammemberId;
             if (organization == null)
             {
                 return HttpNotFound();
@@ -68,29 +73,29 @@ namespace FinalCapstone.Controllers
             }
         }
 
-        public ActionResult IndividualTeams()
-        {
-            var userId = User.Identity.GetUserId();
-            var foundMember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
-            var member = db.TeammemberTeam.Where(a => a.TeammemberId == foundMember.TeammemberId).FirstOrDefault();
-            if (member == null)
-            {
-                return RedirectToAction("Index");
-            }
-            var foundTeams = db.TeammemberTeam.Where(a=>a.TeamId == member.TeamId).ToList();
-            foreach(TeammemberTeam team in foundTeams)
-            {
-                var newTeamNames = db.Teams.Where(a => a.TeamId == team.TeamId).ToList();
-                foreach(Team theTeam in newTeamNames)
-                {
-                    var theTeams = db.Teams.Where(a => a.Name == theTeam.Name).ToList();
-                    return View(theTeams);
-                }
-            }
-            //var foundOrganization = db.Organizations.Find(foundTeams.OrganizationId);
-            //ViewBag.OrganizationName = foundOrganization.Name;
-            return View("Index");
-        }
+        //public ActionResult IndividualTeams()
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var foundMember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+        //    var member = db.TeammemberTeam.Where(a => a.TeammemberId == foundMember.TeammemberId).FirstOrDefault();
+        //    if (member == null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    var foundTeams = db.TeammemberTeam.Where(a=>a.TeamId == member.TeamId).ToList();
+        //    foreach(TeammemberTeam team in foundTeams)
+        //    {
+        //        var newTeamNames = db.Teams.Where(a => a.TeamId == team.TeamId).ToList();
+        //        foreach(Team theTeam in newTeamNames)
+        //        {
+        //            var theTeams = db.Teams.Where(a => a.Name == theTeam.Name).ToList();
+        //            return View(theTeams);
+        //        }
+        //    }
+        //    //var foundOrganization = db.Organizations.Find(foundTeams.OrganizationId);
+        //    //ViewBag.OrganizationName = foundOrganization.Name;
+        //    return View("Index");
+        //}
 
         // GET: Organizations/Edit/5
         public ActionResult Edit(int id)

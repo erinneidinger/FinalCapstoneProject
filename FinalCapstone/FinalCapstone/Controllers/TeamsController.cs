@@ -76,27 +76,30 @@ namespace FinalCapstone.Controllers
 
         //}
 
-
-
-        //trying to fix this hot mess..
-        //public ActionResult PreTeamsList(int id)
+        //public ActionResult AddToCounter(int id)
         //{
-        //    var userId = User.Identity.GetUserId();
-        //    var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
-        //    var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
-        //    var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
-        //    ViewBag.foundTeams = foundTeams;
-        //    ViewBag.OrganizationName = foundOrganization.Name;
-        //    ViewBag.OrganizationId = foundOrganization.OrganizationId;
-        //    var found = db.TeammemberTeam.Where(a => a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
-        //    ViewBag.Junction = found;
-        //    if (found == null)
+        //    var foundTeam = db.Teams.Where(a => a.TeamId == id).FirstOrDefault();
+        //    foundTeam.Counter += input;
+        //    if (ModelState.IsValid)
         //    {
-        //        return View(foundTeams);
+        //        db.Entry(foundTeam).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return View(foundTeam);
         //    }
-        //    ViewBag.TeamMemberId = teamMember.TeammemberId;
         //    return View("TeamsList");
         //}
+
+        //trying to fix this hot mess..
+        public ActionResult PreTeamsList(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
+            var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
+            var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
+            ViewBag.foundTeams = foundTeams;
+            ViewBag.teammemberId = teamMember.TeammemberId;
+            return View(foundTeams);
+        }
 
         public ActionResult AddToJunction(int Id)
         {
@@ -108,7 +111,7 @@ namespace FinalCapstone.Controllers
             var team = db.Teams.Where(a => a.TeamId == teammemberteam.TeamId).FirstOrDefault();
             ViewBag.Team = team.Name;
             teammemberteam.TeammemberId = teammemberId;
-            var sameTeammemberteam = db.TeammemberTeam.Where(a => a.TeamId == teammemberteam.TeamId).Where(a=>a.TeammemberId == teammemberteam.TeammemberId).FirstOrDefault();
+            var sameTeammemberteam = db.TeammemberTeam.Where(a => a.TeamId == teammemberteam.TeamId).Where(a => a.TeammemberId == teammemberteam.TeammemberId).FirstOrDefault();
             if (sameTeammemberteam == null)
             {
                 db.TeammemberTeam.Add(teammemberteam);
@@ -118,7 +121,26 @@ namespace FinalCapstone.Controllers
             return View(teammemberteam);
         }
 
-        //Duplicate on OrganizationsController?
+        public ActionResult IndividualTeams(int id)
+        {
+            if (id == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            var foundTeams = db.TeammemberTeam.Where(a => a.TeammemberId == id).ToList();
+            List<Team>teams = new List<Team>();
+            foreach (TeammemberTeam team in foundTeams)
+            {
+                var newTeam = db.Teams.Where(a => a.TeamId == team.TeamId).FirstOrDefault();
+                teams.Add(newTeam);
+            }
+            ViewBag.teams = teams;
+            var userId = User.Identity.GetUserId();
+            var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
+            ViewBag.teammemberId = teamMember.TeammemberId;
+            return View(teams);
+        }
+
         public ActionResult TeamsList(int id)
         {
             var userId = User.Identity.GetUserId();
@@ -127,7 +149,7 @@ namespace FinalCapstone.Controllers
             var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
             ViewBag.OrganizationName = foundOrganization.Name;
             ViewBag.OrganizationId = foundOrganization.OrganizationId;
-            var found = db.TeammemberTeam.Where(a=>a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
+            var found = db.TeammemberTeam.Where(a => a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
             ViewBag.Junction = found;
             if (found == null)
             {
@@ -136,6 +158,45 @@ namespace FinalCapstone.Controllers
             ViewBag.TeamMemberId = teamMember.TeammemberId;
             return View(foundTeams);
         }
+
+        //Orginal WORK WORKING, KEEP KEEP
+        //public ActionResult TeamsList(int id)
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var teamMember = db.Teammembers.Where(t => t.ApplicationId == userId).FirstOrDefault();
+        //    var foundOrganization = db.Organizations.Where(a => a.OrganizationId == id).FirstOrDefault();
+        //    var foundTeams = db.Teams.Where(a => a.OrganizationId == foundOrganization.OrganizationId).ToList();
+        //    ViewBag.OrganizationName = foundOrganization.Name;
+        //    ViewBag.OrganizationId = foundOrganization.OrganizationId;
+        //    var found = db.TeammemberTeam.Where(a=>a.TeammemberId == teamMember.TeammemberId).FirstOrDefault();
+        //    ViewBag.Junction = found;
+        //    if (found == null)
+        //    {
+        //        return View(foundTeams);
+        //    }
+        //    ViewBag.TeamMemberId = teamMember.TeammemberId;
+        //    return View(foundTeams);
+        //}
+
+        //public ActionResult AddToJunction(int Id)
+        //{
+        //    TeammemberTeam teammemberteam = new TeammemberTeam();
+        //    var userId = User.Identity.GetUserId();
+        //    var newTeammember = db.Teammembers.Where(a => a.ApplicationId == userId).FirstOrDefault();
+        //    var teammemberId = newTeammember.TeammemberId;
+        //    teammemberteam.TeamId = Id;
+        //    var team = db.Teams.Where(a => a.TeamId == teammemberteam.TeamId).FirstOrDefault();
+        //    ViewBag.Team = team.Name;
+        //    teammemberteam.TeammemberId = teammemberId;
+        //    var sameTeammemberteam = db.TeammemberTeam.Where(a => a.TeamId == teammemberteam.TeamId).Where(a => a.TeammemberId == teammemberteam.TeammemberId).FirstOrDefault();
+        //    if (sameTeammemberteam == null)
+        //    {
+        //        db.TeammemberTeam.Add(teammemberteam);
+        //        db.SaveChanges();
+        //    }
+        //    //ViewBag.sameTeammemberteam = sameTeammemberteam;
+        //    return View(teammemberteam);
+        //}
 
         // GET: Teams/Edit/5
         public ActionResult Edit(int id)
